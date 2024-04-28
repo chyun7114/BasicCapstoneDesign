@@ -98,6 +98,8 @@ public class NewBehaviourScript : MonoBehaviour
     {
         // 트리거 발동 대상이 npc이면
         // 대화 진행 가능하게 만들 것이다
+        // npc에 적용되어 있는 충돌 관련 collider대신
+        // 더 큰 반구로 적용되어있는 collider는 trigger발동용 콜라이더입니다.
         if (other.name == "NPC")
         {
             Debug.Log("대화 진행 가능");
