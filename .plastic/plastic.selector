@@ -1,0 +1,4 @@
+repository "24-1기초캡스톤@wodls1593@cloud"
+  path "/"
+    smartbranch "/main/테스트브런치" 
+     
