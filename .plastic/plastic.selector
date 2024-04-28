@@ -1,4 +1,9 @@
 repository "24-1기초캡스톤@wodls1593@cloud"
   path "/"
+<<<<<<< HEAD
     smartbranch "/main/테스트브런치" 
      
+=======
+    br "/main"
+    co "/main"
+>>>>>>> 7482e2d34c62cbc7633ffcb6d4dcb50795c68ee0
