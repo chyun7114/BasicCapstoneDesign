@@ -10,13 +10,13 @@ public class NPCDataManager : MonoBehaviour
     public static NPCDataManager instance;
     
     // 구글 스프레드시트 정보
-    private string npcSheetAddress =
+    private static string npcSheetAddress =
         "https://docs.google.com/spreadsheets/d/1kvUgw2itgct0aEOObbZ3S3NXUhytNOiK33ZcowjBE-I";
 
-    private string npcSheetDataRange = "A2:B";
-    private string npcDataSheetId = "0";
+    private static string npcSheetDataRange = "A2:B";
+    private static string npcDataSheetId = "0";
 
-    private string npcDatas;
+    private static string npcDatas;
     // Npc 데이터 리스트
     public List<NPCData> npcDataList;
     
@@ -50,15 +50,24 @@ public class NPCDataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+    
         StartCoroutine(ReadNpcSheetData());
         
         // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
     }
 
-    private IEnumerator ReadNpcSheetData()
+    public IEnumerator ReadNpcSheetData()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+             Destroy(gameObject);
+        }
+        
         // NPC 데이터 시트 주소 생성
         string address = SheetDataManager.SheetAddressToString(npcSheetAddress, npcSheetDataRange, npcDataSheetId);
         Debug.Log(address);
@@ -68,11 +77,13 @@ public class NPCDataManager : MonoBehaviour
         
         // 코루틴 실행 완료 후 데이터 저장
         StoreDataInList();
+        
+        DontDestroyOnLoad(gameObject);
     }
     
     // 코루틴 실행 후에 저장 및 테스트 가능합니다
     // 테스트 코드는 여기에 입력해 주세요
-    public void StoreDataInList()
+    private void StoreDataInList()
     {
         // 코루틴이 완료된 후에 npcDatas에 데이터 할당
         npcDatas = SheetDataManager.datas;
