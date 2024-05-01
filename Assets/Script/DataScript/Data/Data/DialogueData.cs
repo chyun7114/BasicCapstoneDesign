@@ -55,7 +55,7 @@ public class DialogueData : MonoBehaviour
 
     public string NpcName
     {
-        get => NpcName;
-        set => NpcName = value;
+        get;
+        set;
     }
 }
