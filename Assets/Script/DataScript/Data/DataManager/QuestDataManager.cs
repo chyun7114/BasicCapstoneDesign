@@ -4,30 +4,28 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
+public class QuestDataManager : MonoBehaviour, IDataManager<QuestData>
 {
     // NPC singleton
-    public static NPCDataManager instance;
+    public static QuestDataManager instance;
     
     // 구글 스프레드시트 정보
     private static string npcSheetAddress =
-        "https://docs.google.com/spreadsheets/d/1kvUgw2itgct0aEOObbZ3S3NXUhytNOiK33ZcowjBE-I";
+        "https://docs.google.com/spreadsheets/d/1ZeUuIqWMsNimTG9pKzrsbSvd5VKzeubUrnuxRmpg-wg";
 
-    private static string npcSheetDataRange = "A2:B";
+    private static string npcSheetDataRange = "A2:F";
     private static string npcDataSheetId = "0";
 
-    private static string npcDatas;
-    // Npc 데이터 리스트
-    public List<NPCData> npcDataList;
+    public List<QuestData> questDataList;
+    private string questDatas;
     
-    // 싱글톤을 이용하여 구현함
-    public NPCDataManager Instance
+    public QuestDataManager Instance
     {
         get
         {
             if (!instance)
             {
-                instance = FindObjectOfType(typeof(NPCDataManager)) as NPCDataManager;
+                instance = FindObjectOfType(typeof(QuestDataManager)) as QuestDataManager;
 
                 if (instance == null)
                 {
@@ -38,8 +36,9 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
             return instance;
         }
     }
-
-    private void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
         if (instance == null)
         {
@@ -56,7 +55,7 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
         // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
     }
-
+    
     public IEnumerator ReadNpcSheetData()
     {
         if (instance == null)
@@ -65,7 +64,7 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
         }
         else if(instance != this)
         {
-             Destroy(gameObject);
+            Destroy(gameObject);
         }
         
         // NPC 데이터 시트 주소 생성
@@ -86,49 +85,40 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
     private void StoreDataInList()
     {
         // 코루틴이 완료된 후에 npcDatas에 데이터 할당
-        npcDatas = SheetDataManager.datas;
+        questDatas = SheetDataManager.datas;
 
         // 할당된 데이터를 사용하여 NPC 데이터 리스트 생성
-        npcDataList = GetDatas(npcDatas);
+        questDataList = GetDatas(questDatas);
         
         // 테스트 코드 입력
-        foreach (NPCData element in npcDataList)
+        foreach (QuestData element in questDataList)
         {
-            Debug.Log("id = " + element.NpcId + "name = " + element.NpcName);
+            Debug.Log(element.QuestId);
         }
     }
     
-    // 이후 코드는 리팩토링 필요한 코드입니다
-    // DataManager를 상속하는걸 목표로 리팩토링 할 예정입니다
-    public List<NPCData> GetDatas(string data)
-    {
-        if (npcDataList == null)
+    
+    public List<QuestData> GetDatas(string data){
+        if (questDataList == null)
         {
-            npcDataList = new List<NPCData>();
+            questDataList = new List<QuestData>();
         }
         string[] splitedData = data.Split("\n");
 
         foreach (string element in splitedData)
         {
             string[] datas = element.Split("\t");
-            npcDataList.Add(GetData(datas));
+            questDataList.Add(GetData(datas));
         }
 
-        return npcDataList;
+        return questDataList;
     }
-    
-    
-    public List<NPCData> GetNPCList()
+    public QuestData GetData(string[] datas)
     {
-        return npcDataList;
-    }
-
-    public NPCData GetData(string[] datas)
-    {
-        object data = Activator.CreateInstance(typeof(NPCData));
+        object data = Activator.CreateInstance(typeof(QuestData));
         
-        FieldInfo[] fields = typeof(NPCData)
-                .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo[] fields = typeof(QuestData)
+            .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
         for (int i = 0; i < datas.Length; i++)
         {
@@ -160,9 +150,12 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
                 Debug.LogError(e);
             }
         }
-        
-        
-        return (NPCData)data;
+
+        return (QuestData) data;
     }
-    
+
+    public List<QuestData> GetList
+    {
+        get => questDataList;
+    }
 }

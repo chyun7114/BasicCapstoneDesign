@@ -7,7 +7,11 @@ public class NPCData : MonoBehaviour
     [SerializeField] 
     private int npcId;
     private string npcName;
-    
+
+    public void print()
+    {
+        Debug.Log("id = " + this.npcId + "name = " + this.npcName);
+    }
     
     /*
      * C#의 getter, setter는

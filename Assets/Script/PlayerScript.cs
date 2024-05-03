@@ -24,6 +24,10 @@ public class NewBehaviourScript : MonoBehaviour
 
     private GameObject runText;
     
+    
+    // 각종 데이터 목록 접근을 위한 변수 목록들
+    public List<QuestData> questDataList;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +35,9 @@ public class NewBehaviourScript : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
 
         runText = GameObject.Find("IsRun");
+
+        questDataList = GameObject.Find("QuestDataManager")
+            .GetComponent<QuestDataManager>().GetList;
     }
 
     void Update()

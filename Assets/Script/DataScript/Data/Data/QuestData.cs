@@ -11,6 +11,12 @@ public class QuestData : MonoBehaviour
     private string questName;
     private string questDetail;
 
+    public void print()
+    {
+        Debug.Log("Now Quest num : " + questId);
+    }
+    
+    
     public int QuestId
     {
         get => questId;
