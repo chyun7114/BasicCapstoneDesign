@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Script.DataScript.Data.Interface;
 using UnityEngine;
 
-public class QuestData : MonoBehaviour
+public class QuestData : IData
 {
     private int questId;
     private int nextQuestId;
@@ -15,7 +14,11 @@ public class QuestData : MonoBehaviour
     {
         Debug.Log("Now Quest num : " + questId);
     }
-    
+
+    public bool matches(string kwd)
+    {
+        return false;
+    }
     
     public int QuestId
     {

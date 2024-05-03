@@ -23,10 +23,10 @@ public class NewBehaviourScript : MonoBehaviour
     public bool isRun = false;
 
     private GameObject runText;
+    public  GameObject dataManager;
+
+    public List<NPCData> npcList;
     
-    
-    // 각종 데이터 목록 접근을 위한 변수 목록들
-    public List<QuestData> questDataList;
     
     // Start is called before the first frame update
     void Start()
@@ -35,9 +35,9 @@ public class NewBehaviourScript : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
 
         runText = GameObject.Find("IsRun");
+        dataManager = GameObject.Find("DataManager");
 
-        questDataList = GameObject.Find("QuestDataManager")
-            .GetComponent<QuestDataManager>().GetList;
+        npcList = dataManager.GetComponent<NPCDataManager>().GetNPCList();
     }
 
     void Update()
@@ -107,10 +107,13 @@ public class NewBehaviourScript : MonoBehaviour
         // 대화 진행 가능하게 만들 것이다
         // npc에 적용되어 있는 충돌 관련 collider대신
         // 더 큰 반구로 적용되어있는 collider는 trigger발동용 콜라이더입니다.
-        if (other.name == "NPC")
+        foreach (var element in npcList)
         {
-            Debug.Log("대화 진행 가능");
-            Camera.main.transform.LookAt(other.transform);
+            if (other.name.Equals(element.NpcName))
+            {
+                Debug.Log($"{element.NpcName}와 대화 진행 가능");
+            }
         }
+        
     }
 }

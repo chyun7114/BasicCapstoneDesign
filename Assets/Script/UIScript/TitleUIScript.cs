@@ -27,7 +27,7 @@ public class TitleUIScript : MonoBehaviour
         // newGame Button 누르면 게임 시작
         // 일단 SampleScene으로 넘어가게 해두었고
         // 추가적인 게임 시작시 필요한 메소드나 기능 필요시 그 기능 혹은 메소드로 넘어가도록 코드 변경
-        LoadScene("SampleScene");
+        LoadScene("TestScene");
     }
 
     public void OnClickLoadGameButton()

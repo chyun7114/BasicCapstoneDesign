@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Script.DataScript.Data.Interface;
 using UnityEngine;
 
 
-public class DialogueData : MonoBehaviour
+public class DialogueData : IData
 {
     [SerializeField]
     private int dialogueId;
@@ -13,6 +14,17 @@ public class DialogueData : MonoBehaviour
     
     private string dialogueString;
     private string npcName;
+
+    // override method
+    public void print()
+    {
+        Debug.Log($"{dialogueString}");
+    }
+
+    public bool matches(string kwd)
+    {
+        return false;
+    }
     
     // getter, setter 설정 부분
     

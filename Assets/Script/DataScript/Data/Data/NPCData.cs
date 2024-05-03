@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Script.DataScript.Data.Interface;
 using UnityEngine;
 
-public class NPCData : MonoBehaviour
+public class NPCData : IData
 {
     [SerializeField] 
     private int npcId;
@@ -10,7 +9,14 @@ public class NPCData : MonoBehaviour
 
     public void print()
     {
-        Debug.Log("id = " + this.npcId + "name = " + this.npcName);
+        Debug.Log($"npcId : {npcId} npcName : {npcName}");
+    }
+
+    public bool matches(string kwd)
+    {
+        if (npcName.Equals(kwd))
+            return true;
+        return false;
     }
     
     /*

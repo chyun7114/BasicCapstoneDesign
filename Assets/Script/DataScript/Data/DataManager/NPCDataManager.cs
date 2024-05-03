@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
+public class NPCDataManager : MonoBehaviour
 {
     // NPC singleton
     public static NPCDataManager instance;
@@ -17,6 +17,7 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
     private static string npcDataSheetId = "0";
 
     private static string npcDatas;
+    
     // Npc 데이터 리스트
     public List<NPCData> npcDataList;
     
@@ -90,12 +91,14 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
 
         // 할당된 데이터를 사용하여 NPC 데이터 리스트 생성
         npcDataList = GetDatas(npcDatas);
+        Debug.Log("NPC DATA LOAD COMPLETE");
+        
         
         // 테스트 코드 입력
-        foreach (NPCData element in npcDataList)
-        {
-            Debug.Log("id = " + element.NpcId + "name = " + element.NpcName);
-        }
+        // foreach (NPCData element in npcDataList)
+        // {
+        //     element.print();
+        // }
     }
     
     // 이후 코드는 리팩토링 필요한 코드입니다
@@ -132,28 +135,29 @@ public class NPCDataManager : MonoBehaviour,IDataManager<NPCData>
 
         for (int i = 0; i < datas.Length; i++)
         {
+            string inputData = datas[i].Replace("\r", "");
             try
             {
                 // string > parse
                 Type type = fields[i].FieldType;
 
-                if (string.IsNullOrEmpty(datas[i])) continue;
+                if (string.IsNullOrEmpty(inputData)) continue;
 
                 if (type == typeof(int))
-                    fields[i].SetValue(data, int.Parse(datas[i]));
+                    fields[i].SetValue(data, int.Parse(inputData));
 
                 else if (type == typeof(float))
-                    fields[i].SetValue(data, float.Parse(datas[i]));
+                    fields[i].SetValue(data, float.Parse(inputData));
 
                 else if (type == typeof(bool))
-                    fields[i].SetValue(data, bool.Parse(datas[i]));
+                    fields[i].SetValue(data, bool.Parse(inputData));
 
                 else if (type == typeof(string))
-                    fields[i].SetValue(data, datas[i]);
+                    fields[i].SetValue(data, inputData);
 
                 // enum
                 else
-                    fields[i].SetValue(data, Enum.Parse(type, datas[i]));
+                    fields[i].SetValue(data, Enum.Parse(type, inputData));
             }
             catch (Exception e)
             {
