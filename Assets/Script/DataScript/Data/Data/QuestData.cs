@@ -17,6 +17,8 @@ public class QuestData : IData
 
     public bool matches(string kwd)
     {
+        if (this.questId == int.Parse(kwd))
+            return true;
         return false;
     }
     
