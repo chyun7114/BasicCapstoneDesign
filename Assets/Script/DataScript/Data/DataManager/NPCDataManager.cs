@@ -18,6 +18,7 @@ public class NPCDataManager : MonoBehaviour
 
     private static string npcDatas;
     
+
     // Npc 데이터 리스트
     public List<NPCData> npcDataList;
     
