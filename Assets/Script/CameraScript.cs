@@ -17,13 +17,23 @@ public class CameraScript : MonoBehaviour
     
     private Vector3 targetRotation;
     private Vector3 currentVel;
+    private bool whileChatting = false;
     
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
+    
+    public void StartChat()
+    {
+        whileChatting = true;
+    }
+    public void EndChat()
+    {
+        whileChatting = false;
+    }
+    
     // Update is called once per frame
     void Update()
     {

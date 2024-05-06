@@ -67,7 +67,7 @@ public class DialogueData : IData
 
     public string NpcName
     {
-        get;
-        set;
+        get => npcName;
+        set => npcName = value;
     }
 }

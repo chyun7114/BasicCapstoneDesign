@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -13,7 +12,6 @@ public class NewBehaviourScript : MonoBehaviour
 {
     private Rigidbody rb;
     public GameObject player;
-
     private Transform mainCameraTransform;
     
     public float moveSpeed = 5.0f;
@@ -27,8 +25,12 @@ public class NewBehaviourScript : MonoBehaviour
     public  GameObject dataManager;
 
     public List<NPCData> npcList;
-    
-    
+    private GameObject PressE;
+    public GameObject chatting;
+    public GameObject chatManager;
+    private bool chatEnabled = false;
+    private bool whileChatting = false;
+    private string nearNPC;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         runText = GameObject.Find("IsRun");
         dataManager = GameObject.Find("DataManager");
-
+        PressE = GameObject.Find("PressE");
         npcList = dataManager.GetComponent<NPCDataManager>().GetNPCList();
     }
 
@@ -51,7 +53,7 @@ public class NewBehaviourScript : MonoBehaviour
         Vector3 sideDirection = mainCameraTransform.right * horizontalInput;
 
         // 캐릭터를 회전시킵니다.
-        if (verticalInput != 0 || horizontalInput != 0)
+        if ((verticalInput != 0 || horizontalInput != 0) && !whileChatting)
         {
             // 캐릭터의 이동 방향 벡터를 계산합니다.
             Vector3 rotateDirection = mainCameraTransform.forward * verticalInput +
@@ -68,7 +70,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         // 입력이 있는 경우에만 캐릭터를 이동시킵니다.
-        if (verticalInput != 0)
+        if (verticalInput != 0 && !whileChatting)
         {
             if (isRun)
             {
@@ -81,7 +83,7 @@ public class NewBehaviourScript : MonoBehaviour
             }
         }
 
-        if (horizontalInput != 0)
+        if (horizontalInput != 0 && !whileChatting)
         {
             if (isRun)
             {
@@ -93,19 +95,25 @@ public class NewBehaviourScript : MonoBehaviour
                 rb.MovePosition(rb.position + sideDirection * moveSpeed * Time.deltaTime);
             }
         }
-        
-        // 달리기 활성화 테스트
+
         if (Input.GetMouseButtonDown(1))
         {
             isRun = isRun ? false : true;
         }
         
         runText.GetComponent<TextMeshProUGUI>().text = (isRun == true ? "run" : "walk");
-        
-        // i 버튼 누르면 아이템 도감 보는곳으로 이동
-        if (Input.GetKey(KeyCode.I))
+
+        if(Input.GetKeyDown(KeyCode.E))
         {
-            SceneManager.LoadScene("ItemListScene");
+            if(chatEnabled)
+            {
+                chatting.SetActive(true);
+                whileChatting=true;
+                Camera.main.GetComponent<CameraScript>().StartChat();
+                chatting.GetComponent<ChatPrint>().ChatOpen(nearNPC);
+                //chatting.GetComponent<ChatPrint>().ChatPrinting("Test Text Test Text Test Text Test Text Test Text");
+            }
+            Debug.Log("E Down");
         }
     }
     
@@ -119,9 +127,28 @@ public class NewBehaviourScript : MonoBehaviour
         {
             if (other.name.Equals(element.NpcName))
             {
+                chatEnabled=true;
+                nearNPC=other.name;
+                PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
                 Debug.Log($"{element.NpcName}와 대화 진행 가능");
             }
         }
         
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        foreach (var element in npcList)
+        {
+            if (other.name.Equals(element.NpcName))
+            {
+                chatEnabled=false;
+                PressE.GetComponent<PressE>().Hide();
+                Debug.Log($"{element.NpcName}에서 멀어짐");
+            }
+        }
+    }
+    public void EndChat()
+    {
+        whileChatting=false;
     }
 }
