@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -92,13 +93,20 @@ public class NewBehaviourScript : MonoBehaviour
                 rb.MovePosition(rb.position + sideDirection * moveSpeed * Time.deltaTime);
             }
         }
-
+        
+        // 달리기 활성화 테스트
         if (Input.GetMouseButtonDown(1))
         {
             isRun = isRun ? false : true;
         }
         
         runText.GetComponent<TextMeshProUGUI>().text = (isRun == true ? "run" : "walk");
+        
+        // i 버튼 누르면 아이템 도감 보는곳으로 이동
+        if (Input.GetKey(KeyCode.I))
+        {
+            SceneManager.LoadScene("ItemListScene");
+        }
     }
     
     private void OnTriggerEnter(Collider other)
