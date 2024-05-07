@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: 82bdec202166119488773e21c0ba9326
   - enabled: 1
     path: Assets/Scenes/TestScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 47efd9699d8ea86439a7e2db4383be94
   - enabled: 1
     path: Assets/Scenes/ItemListScene.unity
     guid: 0f2789b07bb0b58438a8375c07597b10

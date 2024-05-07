@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -102,7 +103,8 @@ public class NewBehaviourScript : MonoBehaviour
         }
         
         runText.GetComponent<TextMeshProUGUI>().text = (isRun == true ? "run" : "walk");
-
+        
+        // 대화 시작 키 => e키 누르면 대화 시작 및 대화 진행
         if(Input.GetKeyDown(KeyCode.E))
         {
             if(chatEnabled)
@@ -114,6 +116,12 @@ public class NewBehaviourScript : MonoBehaviour
                 //chatting.GetComponent<ChatPrint>().ChatPrinting("Test Text Test Text Test Text Test Text Test Text");
             }
             Debug.Log("E Down");
+        }
+        
+        // 아이템 도감 진입 키 => I키 누르면 진입 및, esc키와 x버튼 눌러서 종료
+        if (Input.GetKey(KeyCode.I))
+        {
+            SceneManager.LoadScene("ItemListScene");
         }
     }
     
