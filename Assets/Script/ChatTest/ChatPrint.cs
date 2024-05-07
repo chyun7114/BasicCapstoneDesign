@@ -139,12 +139,14 @@ public class ChatPrint : MonoBehaviour
     {
         foreach(var element in dialogueList)
         {
-            Debug.Log(element.NpcName);
+            // Debug.Log(element.NpcName);
             if(chattingNPC.Equals(element.NpcName))
             {
-                Debug.Log("Found");
+                // Debug.Log("Found");
                 if(currentchat[element.NPCId]==9999)
                 {
+                    // 밑에 코드 없으면 한 npc에게 한번만 대화 할 수 있어서 수정함
+                    currentchat[element.NPCId] = 0;
                     return null;
                 }
                 else if(currentchat[element.NPCId]==0 ||currentchat[element.NPCId]==element.DialogueId)
