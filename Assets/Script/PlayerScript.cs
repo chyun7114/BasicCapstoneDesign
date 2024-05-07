@@ -24,14 +24,16 @@ public class NewBehaviourScript : MonoBehaviour
 
     private GameObject runText;
     public  GameObject dataManager;
-
-    public List<NPCData> npcList;
     private GameObject PressE;
     public GameObject chatting;
     public GameObject chatManager;
+    
+    public List<NPCData> npcList;
+    
     private bool chatEnabled = false;
     private bool whileChatting = false;
     private string nearNPC;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +111,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             if(chatEnabled)
             {
+                runText.SetActive(false);
                 chatting.SetActive(true);
                 whileChatting=true;
                 Camera.main.GetComponent<CameraScript>().StartChat();

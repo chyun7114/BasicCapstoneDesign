@@ -5,8 +5,8 @@ using TMPro;
 
 public class ChatPrint : MonoBehaviour
 {
-    public  GameObject dataManager;
-    
+    public GameObject dataManager;
+    public GameObject runText;
     public List<DialogueData> dialogueList;
     
     public TMP_Text chatText;
@@ -164,5 +164,6 @@ public class ChatPrint : MonoBehaviour
         player.GetComponent<NewBehaviourScript>().EndChat();
         isChatting = false;
         chatpanel.SetActive(false);
+        runText.SetActive(true);
     }
 }

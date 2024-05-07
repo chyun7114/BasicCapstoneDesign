@@ -4,12 +4,20 @@ using System.Xml;
 using Script.DataScript.Data.Interface;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour , IData
+public class PlayerData : MonoBehaviour, IData
 {
     [SerializeField] 
     private string playerName;
+
     private List<QuestData> playerQuestList;
     private List<ItemData> playerItemList;
+
+    public PlayerData(string name)
+    {
+        playerName = name;
+        playerQuestList = new List<QuestData>();
+        playerItemList = new List<ItemData>();
+    }
     
     public void print()
     {

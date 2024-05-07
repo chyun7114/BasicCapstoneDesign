@@ -84,8 +84,8 @@ public class QuestDataManager : MonoBehaviour
         
         DontDestroyOnLoad(gameObject);
 
-        questManager = gameObject.GetComponent<QuestManager>();
-        questManager.SetQuestManager();
+        // questManager = gameObject.GetComponent<QuestManager>();
+        // questManager.SetQuestManager();
     }
     
     // 코루틴 실행 후에 저장 및 테스트 가능합니다

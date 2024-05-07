@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,15 +8,15 @@ public class ItemUIScript : MonoBehaviour
     public GameObject prefab;
     public GameObject dataManager;
         
-    public List<ItemData> itemDataList;
-    public List<ItemData> playerItemDataList;
+    private List<ItemData> itemDataList;
+    private List<ItemData> playerItemDataList;
 
     
     void ItemUIInit()
     {
         dataManager = GameObject.Find("DataManager");
         itemDataList = dataManager.GetComponent<ItemDataManager>().GetList;
-        playerItemDataList = dataManager.GetComponent<PlayerData>().PlayerItemList;
+        // playerItemDataList = dataManager.GetComponent<PlayerDataManager>().PlayerItemList;
     }
     // Start is called before the first frame update
     void Start()
@@ -42,12 +43,31 @@ public class ItemUIScript : MonoBehaviour
         
         for (int i = 0; i < itemDataList.Count; i++)
         {
-            float dirX = firstDirX + (i % 4) * 20 + 100 * (i % 4);
+            float dirX = firstDirX + (i % 4) * 20+ 100 * (i % 4);
             float dirY = firstDirY - (i / 4) * 100 - (i / 4) * 20;
             Vector3 itemDir = new Vector3(dirX, dirY, 0);
             
             Instantiate(prefab, itemDir, Quaternion.identity, GameObject.Find("ItemList").transform);
+            // if (checkPossesionOfItem(itemDataList[i]))
+            // {
+            //     prefab.GetComponent<TextMeshProUGUI>().text = itemDataList[i].GetItemName;
+            // }
+            // else
+            // {
+            //     prefab.GetComponent<TextMeshProUGUI>().text = "?";
+            // }
         }
     }
-    
+
+    bool checkPossesionOfItem(ItemData item)
+    {
+        foreach (var element in playerItemDataList)
+        {
+            if (element.matches(item.GetItemId.ToString()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

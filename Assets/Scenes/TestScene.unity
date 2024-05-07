@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataManager: {fileID: 0}
+  runText: {fileID: 285966719}
   chatText: {fileID: 1465218204}
   speakerName: {fileID: 1767051131}
   chatSpeed: 1
