@@ -439,9 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8c88c11caf57f4a96c56152bde8951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gradientMat: {fileID: 2100000, guid: cfc9694deac9805459f64806bbaba5bd, type: 2}
-  leftCol: {r: 0.4528302, g: 0, b: 0.052954838, a: 0}
-  rightCol: {r: 1, g: 0.740566, b: 0.7587997, a: 1}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +793,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d02b91888866b774fbada2d650ea06a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1084,8 +1081,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ae48a4fbdc781764188ca3a00f8f0ac4, type: 2}
+  m_sharedMaterial: {fileID: 6571820112423654483, guid: ae48a4fbdc781764188ca3a00f8f0ac4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1366,6 +1363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataManager: {fileID: 0}
   runText: {fileID: 285966719}
+  questManager: {fileID: 1692515448}
   chatText: {fileID: 1465218204}
   speakerName: {fileID: 1767051131}
   chatSpeed: 1
@@ -1373,6 +1371,51 @@ MonoBehaviour:
   Speed_1: 0.05
   Speed_2: 0.01
   Speed_3: 0
+--- !u!1 &1692515448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1692515450}
+  - component: {fileID: 1692515449}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1692515449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692515448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da65da19d8c7994584edec113a33db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newQuestPrefab: {fileID: 3303446834156620358, guid: 868bfb1f2f0d83d428135bbaf86eaf5b, type: 3}
+--- !u!4 &1692515450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692515448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 526.2094, y: 333.44247, z: 85.44894}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1766296301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,3 +2342,4 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 1406577779}
   - {fileID: 1685409911}
+  - {fileID: 1692515450}

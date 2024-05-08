@@ -12,13 +12,13 @@ public class PlayerData : MonoBehaviour, IData
     private List<QuestData> playerQuestList;
     private List<ItemData> playerItemList;
 
-    public PlayerData(string name)
+    private void Start()
     {
-        playerName = name;
-        playerQuestList = new List<QuestData>();
+        playerName = "abc";
         playerItemList = new List<ItemData>();
+        playerQuestList = new List<QuestData>();
     }
-    
+
     public void print()
     {
         Debug.Log($"player name : {playerName}");
@@ -30,6 +30,16 @@ public class PlayerData : MonoBehaviour, IData
     }
     
     public string PlayerName { get; set; }
-    public List<QuestData> PlayerQuestList { get; set; }
-    public List<ItemData> PlayerItemList { get; set; }
+
+    public List<QuestData> PlayerQuestList
+    {
+        get => playerQuestList;
+        set => playerQuestList = value;
+    }
+
+    public List<ItemData> PlayerItemList
+    {
+        get => playerItemList; 
+        set => playerItemList = value;
+    }
 }

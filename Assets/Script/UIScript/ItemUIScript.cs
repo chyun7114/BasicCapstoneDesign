@@ -16,7 +16,7 @@ public class ItemUIScript : MonoBehaviour
     {
         dataManager = GameObject.Find("DataManager");
         itemDataList = dataManager.GetComponent<ItemDataManager>().GetList;
-        // playerItemDataList = dataManager.GetComponent<PlayerDataManager>().PlayerItemList;
+        playerItemDataList = dataManager.GetComponent<PlayerData>().PlayerItemList;
     }
     // Start is called before the first frame update
     void Start()
@@ -48,18 +48,17 @@ public class ItemUIScript : MonoBehaviour
             Vector3 itemDir = new Vector3(dirX, dirY, 0);
             
             Instantiate(prefab, itemDir, Quaternion.identity, GameObject.Find("ItemList").transform);
-            // if (checkPossesionOfItem(itemDataList[i]))
-            // {
-            //     prefab.GetComponent<TextMeshProUGUI>().text = itemDataList[i].GetItemName;
-            // }
-            // else
-            // {
-            //     prefab.GetComponent<TextMeshProUGUI>().text = "?";
-            // }
+
+            GameObject itemText = GameObject.Find("ItemText");
+            
+            if (CheckPossesionOfItem(itemDataList[i]))
+            {
+                itemText.GetComponent<TextMeshProUGUI>().text = itemDataList[i].GetItemName;
+            }
         }
     }
 
-    bool checkPossesionOfItem(ItemData item)
+    bool CheckPossesionOfItem(ItemData item)
     {
         foreach (var element in playerItemDataList)
         {
@@ -69,5 +68,10 @@ public class ItemUIScript : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void ItemUIExit()
+    {
+        SceneManager.LoadScene("TestScene");
     }
 }

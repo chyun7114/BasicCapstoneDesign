@@ -13,10 +13,11 @@ public class QuestDataManager : MonoBehaviour
     private static string questSheetAddress =
         "https://docs.google.com/spreadsheets/d/1ZeUuIqWMsNimTG9pKzrsbSvd5VKzeubUrnuxRmpg-wg";
 
-    private static string questSheetDataRange = "A2:F";
+    private static string questSheetDataRange = "A2:G";
     private static string questDataSheetId = "0";
     
     public List<QuestData> questDataList;
+    private List<QuestData> npcQuestList;
     
     private string questDatas;
     
@@ -83,9 +84,6 @@ public class QuestDataManager : MonoBehaviour
         StoreDataInList();
         
         DontDestroyOnLoad(gameObject);
-
-        // questManager = gameObject.GetComponent<QuestManager>();
-        // questManager.SetQuestManager();
     }
     
     // 코루틴 실행 후에 저장 및 테스트 가능합니다

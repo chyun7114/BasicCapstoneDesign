@@ -9,15 +9,18 @@ public class QuestData : IData
     private int npcId;
     private string questName;
     private string questDetail;
-
+    private bool isProgress;
+    
     public void print()
     {
-        Debug.Log("Now Quest num : " + questId);
+        Debug.Log("획득 퀘스트 : " + questName);
     }
 
     public bool matches(string kwd)
     {
-        if (this.questId == int.Parse(kwd))
+        if (kwd.Equals(npcId.ToString()))
+            return true;
+        if (kwd.Equals(questId.ToString()))
             return true;
         return false;
     }
@@ -34,7 +37,7 @@ public class QuestData : IData
         set => nextQuestId = value;
     }
 
-    public int PreviousAuestId
+    public int PreviousQuestId
     {
         get => previousQuestId;
         set => previousQuestId = value;
@@ -56,5 +59,11 @@ public class QuestData : IData
     {
         get => questDetail;
         set => questDetail = value;
+    }
+
+    public bool IsProgress
+    {
+        get => isProgress;
+        set => isProgress = value;
     }
 }

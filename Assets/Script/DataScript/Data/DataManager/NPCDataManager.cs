@@ -122,9 +122,10 @@ public class NPCDataManager : MonoBehaviour
     }
     
     
-    public List<NPCData> GetNPCList()
+    public List<NPCData> NPCList
     {
-        return npcDataList;
+        get => npcDataList;
+        set => npcDataList = value;
     }
 
     public NPCData GetData(string[] datas)

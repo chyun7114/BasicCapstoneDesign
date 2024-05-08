@@ -7,7 +7,9 @@ public class ChatPrint : MonoBehaviour
 {
     public GameObject dataManager;
     public GameObject runText;
+    public GameObject questManager;
     public List<DialogueData> dialogueList;
+    public List<NPCData> npcList;
     
     public TMP_Text chatText;
     public TMP_Text speakerName;
@@ -25,6 +27,7 @@ public class ChatPrint : MonoBehaviour
     
     private string strtoType;
     private string chattingNPC;
+    private int chattingNPCId;
     
     IEnumerator typeCoroutine;
     
@@ -40,10 +43,12 @@ public class ChatPrint : MonoBehaviour
     {
         player = GameObject.Find("Player");
         dataManager = GameObject.Find("DataManager");
+        questManager = GameObject.Find("QuestManager");
         changeSpeed();
         chatpanel = GameObject.Find("ChatCanvas");
         chatpanel.SetActive(false);
         dialogueList = dataManager.GetComponent<DialogueDataManager>().GetList;
+        npcList = dataManager.GetComponent<NPCDataManager>().NPCList;
     }
     void changeSpeed()
     {
@@ -165,5 +170,16 @@ public class ChatPrint : MonoBehaviour
         isChatting = false;
         chatpanel.SetActive(false);
         runText.SetActive(true);
+
+        QuestManager manager = questManager.GetComponent<QuestManager>();
+        foreach (var element in npcList)
+        {
+            if (element.matches(chattingNPC))
+            {
+                chattingNPCId = element.NpcId;
+                break;
+            }
+        }
+        manager.initQuest(chattingNPCId);
     }
 }

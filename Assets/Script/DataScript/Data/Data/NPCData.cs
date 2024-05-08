@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Script.DataScript.Data.Interface;
 using UnityEngine;
 
@@ -6,14 +7,21 @@ public class NPCData : IData
     [SerializeField] 
     private int npcId;
     private string npcName;
-
+    public List<QuestData> npcQuestList;
+    
     public void print()
     {
         Debug.Log($"npcId : {npcId} npcName : {npcName}");
+        foreach (var element in npcQuestList)
+        {
+            Debug.Log($"NPC {npcName} has quest : {element.QuestName}"); 
+        }
     }
 
     public bool matches(string kwd)
     {
+        if (kwd.Equals(npcId.ToString()))
+            return true;
         if (npcName.Equals(kwd))
             return true;
         return false;
@@ -36,5 +44,11 @@ public class NPCData : IData
     {
         get => npcName;
         set => npcName = value;
+    }
+
+    public List<QuestData> NpcQuestList
+    {
+        get => npcQuestList;
+        set => npcQuestList = value;
     }
 }

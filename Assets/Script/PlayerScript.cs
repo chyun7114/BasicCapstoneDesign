@@ -43,7 +43,7 @@ public class NewBehaviourScript : MonoBehaviour
         runText = GameObject.Find("IsRun");
         dataManager = GameObject.Find("DataManager");
         PressE = GameObject.Find("PressE");
-        npcList = dataManager.GetComponent<NPCDataManager>().GetNPCList();
+        npcList = dataManager.GetComponent<NPCDataManager>().NPCList;
     }
 
     void Update()
@@ -116,12 +116,10 @@ public class NewBehaviourScript : MonoBehaviour
                 whileChatting=true;
                 Camera.main.GetComponent<CameraScript>().StartChat();
                 chatting.GetComponent<ChatPrint>().ChatOpen(nearNPC);
-                //chatting.GetComponent<ChatPrint>().ChatPrinting("Test Text Test Text Test Text Test Text Test Text");
             }
-            Debug.Log("E Down");
         }
         
-        // 아이템 도감 진입 키 => I키 누르면 진입 및, esc키와 x버튼 눌러서 종료
+        // 아이템 도감 진입 키 => I키 누르면 진입 및, esc키와 x버튼 클릭으로 종료
         if (Input.GetKey(KeyCode.I))
         {
             SceneManager.LoadScene("ItemListScene");
@@ -130,10 +128,7 @@ public class NewBehaviourScript : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        // 트리거 발동 대상이 npc이면
-        // 대화 진행 가능하게 만들 것이다
-        // npc에 적용되어 있는 충돌 관련 collider대신
-        // 더 큰 반구로 적용되어있는 collider는 trigger발동용 콜라이더입니다.
+        // 대화 진행 가능 여부 판단 후 대화 진행
         foreach (var element in npcList)
         {
             if (other.name.Equals(element.NpcName))
@@ -148,6 +143,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        // 대화가 끝나고 npc와 멀어지면 npc와의 상호작용 불가능
         foreach (var element in npcList)
         {
             if (other.name.Equals(element.NpcName))
