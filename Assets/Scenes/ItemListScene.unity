@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 542737418}
   - component: {fileID: 542737417}
   m_Layer: 5
-  m_Name: Button
+  m_Name: X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -472,7 +472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b18c4e930f8bf24a8c80a84a539c1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1469617544761422895, guid: 118fd78d9373dfc489cc212223a9db4a, type: 3}
+  itemPrefab: {fileID: 4520406663943696576, guid: eb6d85724cc7832418d0dac55836d20c, type: 3}
+  itemDetailPanelPrefab: {fileID: 428404543273008082, guid: 30b54afaeaddc1349aaa88a67ceeb0f3, type: 3}
+  itemImage: {fileID: 2255344194924066120, guid: 9fe74f4627dfe154ebaeb22e4263421c, type: 3}
   dataManager: {fileID: 0}
 --- !u!1 &1102316220
 GameObject:
@@ -486,7 +488,7 @@ GameObject:
   - component: {fileID: 1102316223}
   - component: {fileID: 1102316222}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: XText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

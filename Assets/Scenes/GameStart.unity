@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 649352167}
   - component: {fileID: 649352169}
   - component: {fileID: 649352168}
-  - component: {fileID: 649352171}
+  - component: {fileID: 649352170}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677194634d654854687de9643f332748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &649352171
+--- !u!114 &649352170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

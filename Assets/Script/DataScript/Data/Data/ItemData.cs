@@ -1,3 +1,4 @@
+using System;
 using Script.DataScript.Data.Interface;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class ItemData : IData
 
     public bool matches(string kwd)
     {
+        if (Int32.Parse(kwd) == itemId)
+            return true;
         return false;
     }
 
