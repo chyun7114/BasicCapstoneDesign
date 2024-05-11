@@ -35,6 +35,7 @@ public class TitleUIScript : MonoBehaviour
         // LoadGame Button을 누를 경우
         // 저장된 게임을 불러오는 기능 추가 예정
         // UI + 저장 데이터 불러오는 기능 필요
+        LoadScene("LoadGameScene");
     }
 
     public void OnClickExitGameButton()
