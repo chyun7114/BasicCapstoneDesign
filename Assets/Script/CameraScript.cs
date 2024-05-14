@@ -10,7 +10,7 @@ public class CameraScript : MonoBehaviour
     public Transform target;
     
     private float rotSensitive = 3.0f;
-    private float dis = 5f;
+    private float dis = 7.5f;
     private float rotationMin = 0f;
     private float rotationMax = 80f;
     private float smoothSpeed = 0.125f;

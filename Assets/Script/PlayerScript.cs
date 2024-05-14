@@ -11,6 +11,7 @@ using Vector3 = UnityEngine.Vector3;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+    public Animator animator;
     private Rigidbody rb;
     public GameObject player;
     private Transform mainCameraTransform;
