@@ -51,10 +51,12 @@ public class ItemUIScript : MonoBehaviour
 
     void InputPrefab()
     {
-        Transform t1 = GameObject.Find("ItemList").transform;
+        GameObject go = GameObject.Find("ItemList").transform.gameObject;
 
-        float firstDirX = -550 + t1.position.x;
-        float firstDirY = 250 + t1.position.y - 50;
+        Transform t1 = go.transform.Find("ItemListTitle").transform;
+        
+        float firstDirX = t1.position.x;
+        float firstDirY = t1.position.y - 50;
 
         for (int i = 0; i < itemDataList.Count; i++)
         {
