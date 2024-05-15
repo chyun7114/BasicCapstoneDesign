@@ -12,7 +12,7 @@ public class ItemUIScript : MonoBehaviour
 {
     public GameObject itemPrefab;
     public GameObject itemDetailPanelPrefab;
-    public GameObject dataManager;
+    public DataManager dataManager;
 
     private GameObject activePanel;
 
@@ -24,8 +24,8 @@ public class ItemUIScript : MonoBehaviour
 
     void ItemUIInit()
     {
-        dataManager = GameObject.Find("DataManager");
-        itemDataList = dataManager.GetComponent<ItemDataManager>().GetList;
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
+        itemDataList = dataManager.itemDataManager.GetList;
         playerItemDataList = dataManager.GetComponent<PlayerData>().PlayerItemList;
     }
 

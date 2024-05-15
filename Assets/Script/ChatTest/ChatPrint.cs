@@ -5,12 +5,12 @@ using TMPro;
 
 public class ChatPrint : MonoBehaviour
 {
-    public GameObject dataManager;
     public GameObject runText;
     public GameObject questManager;
     public List<DialogueData> dialogueList;
     public List<NPCData> npcList;
     
+    public DataManager dataManager;
     public TMP_Text chatText;
     public TMP_Text speakerName;
     
@@ -42,13 +42,13 @@ public class ChatPrint : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        dataManager = GameObject.Find("DataManager");
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         questManager = GameObject.Find("QuestManager");
         changeSpeed();
         chatpanel = GameObject.Find("ChatCanvas");
         chatpanel.SetActive(false);
-        dialogueList = dataManager.GetComponent<DialogueDataManager>().GetList;
-        npcList = dataManager.GetComponent<NPCDataManager>().NPCList;
+        dialogueList = dataManager.dialogueDataManager.GetList;
+        npcList = dataManager.npcDataManager.NPCList;
     }
     void changeSpeed()
     {
