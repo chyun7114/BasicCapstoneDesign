@@ -19,18 +19,16 @@ public class SaveData
 
 public class SaveDataManager : MonoBehaviour
 {
-    public GameObject dataManager;
+    public DataManager dataManager;
     public PlayerData playerData;
-    public ItemDataManager itemDataManager;
-    public QuestDataManager questDataManager;
     
     // Start is called before the first frame update
     void Start()
     {
-        dataManager = GameObject.Find("DataManager");
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         playerData = GetComponent<PlayerData>();
-        itemDataManager = GetComponent<ItemDataManager>();
-        questDataManager = GetComponent<QuestDataManager>();
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -97,8 +95,8 @@ public class SaveDataManager : MonoBehaviour
         List<ItemData> loadItemList = new List<ItemData>();
         List<QuestData> loadQuestList = new List<QuestData>();
 
-        List<ItemData> itemDataList = itemDataManager.GetList;
-        List<QuestData> questDataList = questDataManager.GetList;
+        List<ItemData> itemDataList = dataManager.itemDataManager.GetList;
+        List<QuestData> questDataList = dataManager.questDataManager.GetList;
         
         foreach (int id in loadData.playerItemIdList)
         {

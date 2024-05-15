@@ -7,10 +7,13 @@ using UnityEngine.UI;
 
 public class LoadGameUIScript : MonoBehaviour
 {
+    public DataManager dataManager;
+    
     // Start is called before the first frame update
     void Start()
     {
         SetLoadGameUI();
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
     }
 
     // Update is called once per frame
@@ -69,6 +72,6 @@ public class LoadGameUIScript : MonoBehaviour
     {
         SaveDataManager manager = GameObject.Find("DataManager").GetComponent<SaveDataManager>();
         manager.LoadDataInJson(clickedPanel);
-        SceneManager.LoadScene("TestScene");
+        TitleUIScript.LoadScene("Street");
     }
 }

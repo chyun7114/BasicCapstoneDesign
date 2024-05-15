@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class TitleUIScript : MonoBehaviour
 {
+    private DataManager dataManager;
+
+    public GameObject loadingPanel;
+    
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
-        
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
     }
     
     // Update is called once per frame
@@ -17,25 +21,21 @@ public class TitleUIScript : MonoBehaviour
         
     }
 
-    void LoadScene(string sceneName)
+    public static void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
 
     public void OnclickStartGameButtonButton()
     {
-        // newGame Button 누르면 게임 시작
-        // 일단 SampleScene으로 넘어가게 해두었고
-        // 추가적인 게임 시작시 필요한 메소드나 기능 필요시 그 기능 혹은 메소드로 넘어가도록 코드 변경
-        LoadScene("TestScene");
+        // 게임 시작 버튼 누를시 데이터 로드 후 게임 시작
+        dataManager.LoadDataManager("Street");
     }
 
     public void OnClickLoadGameButton()
     {
-        // LoadGame Button을 누를 경우
-        // 저장된 게임을 불러오는 기능 추가 예정
-        // UI + 저장 데이터 불러오는 기능 필요
-        LoadScene("LoadGameScene");
+        // 게임 데이터 로드 이후 
+        dataManager.LoadDataManager("LoadGameScene");
     }
 
     public void OnClickExitGameButton()

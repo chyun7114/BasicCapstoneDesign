@@ -17,6 +17,8 @@ public class PlayerData : MonoBehaviour, IData
         playerName = "abc";
         playerItemList = new List<ItemData>();
         playerQuestList = new List<QuestData>();
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     public void print()

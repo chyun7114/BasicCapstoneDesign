@@ -18,11 +18,18 @@ public class CameraScript : MonoBehaviour
     private Vector3 targetRotation;
     private Vector3 currentVel;
     private bool whileChatting = false;
+    private bool isDragging = false;
+
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        // 초기화
+        targetRotation = new Vector3(0, 0, 10); // 약간 아래를 바라보도록 설정 (원하는 각도로 조정 가능)
+        transform.eulerAngles = targetRotation;
+
+        // 타겟의 뒤쪽으로 카메라 위치 설정
+        transform.position = target.position - transform.forward * dis;
     }
     
     public void StartChat()
@@ -38,19 +45,37 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
 
-        yAxis = yAxis - Input.GetAxis("Mouse X") * -rotSensitive; // 마우스 좌우 움직임 이용
-        xAxis = xAxis - Input.GetAxis("Mouse Y") * rotSensitive; // 마우스 상하 움직임 이용
+        // 채팅 중이 아니면 카메라를 이동시킴
+        if (!whileChatting)
+        {
+            // 마우스 클릭 여부 확인
+            if (Input.GetMouseButtonDown(0))
+            {
+                isDragging = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                isDragging = false;
+            }
 
-        // x축 무한 회전 방지
-        xAxis = Mathf.Clamp(xAxis, rotationMin, rotationMax);
+            if (isDragging)
+            {
+                // 마우스 좌우 움직임 이용
+                yAxis += Input.GetAxis("Mouse X") * rotSensitive;
+                // 마우스 상하 움직임 이용
+                xAxis -= Input.GetAxis("Mouse Y") * rotSensitive;
 
-        // 부드러운 카메라 회전
-        targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(xAxis, yAxis),
-            ref currentVel, smoothSpeed);
+                // x축 무한 회전 방지
+                xAxis = Mathf.Clamp(xAxis, rotationMin, rotationMax);
 
-        this.transform.eulerAngles = targetRotation;
+                // 부드러운 카메라 회전
+                targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(xAxis, yAxis), ref currentVel, smoothSpeed);
 
-        // 카메라는 항상 일정 거리 유지
-        transform.position = target.position - transform.forward * dis;
+                transform.eulerAngles = targetRotation;
+            }
+
+            // 카메라는 항상 일정 거리 유지
+            transform.position = target.position - transform.forward * dis;
+        }
     }
 }
