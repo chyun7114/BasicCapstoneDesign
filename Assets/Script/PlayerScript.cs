@@ -40,9 +40,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         mainCameraTransform = Camera.main.transform;
-        animator = player.GetComponent<Animator>();
-        
-        
+
         runText = GameObject.Find("IsRun");
         dataManager = GameObject.Find("DataManager");
         PressE = GameObject.Find("PressE");
@@ -75,28 +73,33 @@ public class NewBehaviourScript : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        if ((moveDirection.magnitude != 0 || sideDirection.magnitude != 0) && !whileChatting)
+        // 입력이 있는 경우에만 캐릭터를 이동시킵니다.
+        if (verticalInput != 0 && !whileChatting)
         {
-            animator.SetBool("IsWalk", true);
-            Vector3 dir = moveDirection + sideDirection;
             if (isRun)
             {
-                animator.SetBool("IsRun", true);
                 // 캐릭터를 이동시킵니다.
-                rb.MovePosition(rb.position + dir * runSpeed * Time.deltaTime);
+                rb.MovePosition(rb.position + moveDirection * runSpeed * Time.deltaTime);
             }
             else
             {
-                animator.SetBool("IsRun", false);
-                rb.MovePosition(rb.position + dir * moveSpeed * Time.deltaTime);
+                rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.deltaTime);
             }
         }
-        else
+
+        if (horizontalInput != 0 && !whileChatting)
         {
-            animator.SetBool("IsWalk", false);
-            animator.SetBool("IsRun", false);
+            if (isRun)
+            {
+                //캐릭터를 이동시킵니다
+                rb.MovePosition(rb.position + sideDirection * runSpeed * Time.deltaTime);
+            }
+            else
+            {
+                rb.MovePosition(rb.position + sideDirection * moveSpeed * Time.deltaTime);
+            }
         }
-        
+
         if (Input.GetMouseButtonDown(1))
         {
             isRun = isRun ? false : true;
