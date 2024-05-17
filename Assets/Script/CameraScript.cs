@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour
     
     private float rotSensitive = 3.0f;
     private float dis = 7.5f;
-    private float rotationMin = 0f;
+    private float rotationMin = -13.5f;
     private float rotationMax = 80f;
     private float smoothSpeed = 0.125f;
     
@@ -25,11 +25,12 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         // 초기화
-        targetRotation = new Vector3(0, 0, 10); // 약간 아래를 바라보도록 설정 (원하는 각도로 조정 가능)
+        targetRotation = new Vector3(0, 180, 0); // 약간 아래를 바라보도록 설정 (원하는 각도로 조정 가능)
         transform.eulerAngles = targetRotation;
 
         // 타겟의 뒤쪽으로 카메라 위치 설정
-        transform.position = target.position - transform.forward * dis;
+        Vector3 setTargetPosition = target.position + new Vector3(0, 2, 0);
+        transform.position = setTargetPosition - transform.forward * dis;
     }
     
     public void StartChat()
@@ -75,7 +76,8 @@ public class CameraScript : MonoBehaviour
             }
 
             // 카메라는 항상 일정 거리 유지
-            transform.position = target.position - transform.forward * dis;
+            Vector3 setTargetPosition = target.position + new Vector3(0, 2, 0);
+            transform.position = setTargetPosition - transform.forward * dis;
         }
     }
 }

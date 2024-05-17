@@ -74,32 +74,27 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         // 입력이 있는 경우에만 캐릭터를 이동시킵니다.
-        if (verticalInput != 0 && !whileChatting)
+        if ((verticalInput != 0 || horizontalInput != 0) && !whileChatting)
         {
+            animator.SetBool("IsWalk", true); 
+            Vector3 dir = moveDirection + sideDirection;
             if (isRun)
             {
-                // 캐릭터를 이동시킵니다.
-                rb.MovePosition(rb.position + moveDirection * runSpeed * Time.deltaTime);
+                animator.SetBool("IsRun", true);
+                rb.MovePosition(rb.position + dir * runSpeed * Time.deltaTime);
             }
             else
             {
-                rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.deltaTime);
+                animator.SetBool("IsRun", false);
+                rb.MovePosition(rb.position + dir * moveSpeed * Time.deltaTime);
             }
         }
-
-        if (horizontalInput != 0 && !whileChatting)
+        else
         {
-            if (isRun)
-            {
-                //캐릭터를 이동시킵니다
-                rb.MovePosition(rb.position + sideDirection * runSpeed * Time.deltaTime);
-            }
-            else
-            {
-                rb.MovePosition(rb.position + sideDirection * moveSpeed * Time.deltaTime);
-            }
+            animator.SetBool("IsWalk", false);
+            animator.SetBool("IsRun", false);
         }
-
+        
         if (Input.GetMouseButtonDown(1))
         {
             isRun = isRun ? false : true;
