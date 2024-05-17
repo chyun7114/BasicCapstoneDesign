@@ -146,7 +146,6 @@ public class NewBehaviourScript : MonoBehaviour
             {
                 chatEnabled=false;
                 PressE.GetComponent<PressE>().Hide();
-                Debug.Log($"{element.NpcName}에서 멀어짐");
             }
         }
     }
