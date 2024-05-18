@@ -124,6 +124,7 @@ public class NewBehaviourScript : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("대화 가능");
         // 대화 진행 가능 여부 판단 후 대화 진행
         foreach (var element in npcList)
         {

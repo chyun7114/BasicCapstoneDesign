@@ -1169,7 +1169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1406577779
 Transform:
   m_ObjectHideFlags: 0
@@ -1509,7 +1509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1685409911
 Transform:
   m_ObjectHideFlags: 0
@@ -1538,9 +1538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4591561c01201445a0f29378b96013f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataManager: {fileID: 0}
   runText: {fileID: 285966719}
   questManager: {fileID: 1692515448}
+  dataManager: {fileID: 0}
   chatText: {fileID: 1465218204}
   speakerName: {fileID: 1767051131}
   chatSpeed: 1
@@ -1998,8 +1998,8 @@ GameObject:
   - component: {fileID: 1893588627}
   - component: {fileID: 1893588626}
   - component: {fileID: 1893588625}
-  - component: {fileID: 1893588624}
   - component: {fileID: 1893588629}
+  - component: {fileID: 1893588630}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2007,27 +2007,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1893588624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893588623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf4b296049eb0342aff06f59e7ad403, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1893588623}
-  moveSpeed: 5
-  runSpeed: 10
-  forwardRotationSpeed: 10
-  backwardRotationSpeed: 5
-  isRun: 0
-  dataManager: {fileID: 0}
-  chatting: {fileID: 1685409910}
-  chatManager: {fileID: 1249393914}
 --- !u!65 &1893588625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2141,6 +2120,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &1893588630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893588623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf4b296049eb0342aff06f59e7ad403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  player: {fileID: 1893588623}
+  moveSpeed: 5
+  runSpeed: 10
+  forwardRotationSpeed: 10
+  backwardRotationSpeed: 5
+  isRun: 0
+  dataManager: {fileID: 0}
+  chatting: {fileID: 0}
+  chatManager: {fileID: 0}
 --- !u!1 &1897666253
 GameObject:
   m_ObjectHideFlags: 0

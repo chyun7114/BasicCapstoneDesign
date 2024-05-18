@@ -530,9 +530,9 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 7021394002622974016}
   m_AABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_DirtyAABB: 1
+    m_Center: {x: -0.00026622415, y: 0.49472576, z: -0.017986245}
+    m_Extent: {x: 0.07037558, y: 0.06888884, z: 0.06993293}
+  m_DirtyAABB: 0
 --- !u!1 &792696839796972125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,9 +1374,9 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 7021394002622974016}
   m_AABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_DirtyAABB: 1
+    m_Center: {x: 0, y: 0.27829558, z: -0.0024238862}
+    m_Extent: {x: 0.22109531, y: 0.27829558, z: 0.08756217}
+  m_DirtyAABB: 0
 --- !u!1 &1286079687036392805
 GameObject:
   m_ObjectHideFlags: 0
@@ -7468,9 +7468,9 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 7021394002622974016}
   m_AABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_DirtyAABB: 1
+    m_Center: {x: 0.000000018626451, y: 0.4941819, z: 0.010525524}
+    m_Extent: {x: 0.053031527, y: 0.056125194, z: 0.03524191}
+  m_DirtyAABB: 0
 --- !u!1 &7361070570508674385
 GameObject:
   m_ObjectHideFlags: 0
@@ -8962,6 +8962,7 @@ GameObject:
   - component: {fileID: 5961380026410115158}
   - component: {fileID: 74697966412433198}
   - component: {fileID: 1429964349061601474}
+  - component: {fileID: 7427928787926086046}
   m_Layer: 0
   m_Name: rose_test_model
   m_TagString: Untagged
@@ -9248,6 +9249,29 @@ MonoBehaviour:
       m_RotationOrder: 4
     CurveXRangeDegree: 90
     CurveYRangeDegree: 10
+--- !u!136 &7427928787926086046
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8936860567961945232}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 0.6
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &8947342699381496730
 GameObject:
   m_ObjectHideFlags: 0
