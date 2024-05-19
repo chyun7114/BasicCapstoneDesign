@@ -20,7 +20,7 @@ public class QuestManager : MonoBehaviour
     // 플레이어가 지금까지 완료한 퀘스트 리스트
     private List<QuestData> successQuestList;
     // 현재 npc가 가지고 있는 퀘스트 정보
-    private List<QuestData> npcQuestList;
+    private Dictionary<int, List<QuestData>> npcQuestDict;
     
     
     // 퀘스트 수행 가능 표시
@@ -35,28 +35,33 @@ public class QuestManager : MonoBehaviour
         npcList = dataManager.GetComponent<NPCDataManager>().NPCList;
         questList = dataManager.GetComponent<QuestDataManager>().GetList;
         playerQuestList = dataManager.GetComponent<PlayerData>().PlayerQuestList;
-        npcQuestList = new List<QuestData>();
+        npcQuestDict = new Dictionary<int, List<QuestData>>();
         
-        SetNPCQuest();
-        ShowQuestIcon();
+        SetQuestDict();
+        // ShowQuestIcon();
         
         DontDestroyOnLoad(gameObject);
     }
     
-    void SetNPCQuest()
+    void SetQuestDict()
     {
-        foreach (var element in npcList)
+        foreach (var element in questList)
         {
-            List<QuestData> list = new List<QuestData>();
-            foreach (var questData in questList)
+            if (!npcQuestDict.ContainsKey(element.NpcId))
             {
-                if (element.NpcId == questData.NpcId)
-                {
-                    list.Add(questData);
-                }
+                npcQuestDict[element.NpcId] = new List<QuestData>();
             }
+            npcQuestDict[element.NpcId].Add(element);
+        }
+        
+        foreach (var kvp in npcQuestDict)
+        {
+            Debug.Log($"Quest ID: {kvp.Key}");
 
-            element.NpcQuestList = list;
+            foreach (var quest in kvp.Value)
+            {
+                Debug.Log($"Quest ID: {quest.QuestType}, Quest Name: {quest.QuestName}, Detail: {quest.QuestDetail}");
+            }
         }
     }
 
@@ -78,42 +83,9 @@ public class QuestManager : MonoBehaviour
         }
     }
     
-    // 먼저 퀘스트를 받기위해 npc와의 상호작용이 끝나면 다음 코드 삽입
-    public void initQuest(int npcId)
+    // 먼저 퀘스트를 받기 위해 npc와의 상호작용이 끝나면 다음 코드 삽입
+    public void InitQuest(int npcId)
     {
-        NPCData npcData = GetNPCData(npcId);
-
-        if (npcData == null)
-        {
-            Debug.Log("npc 데이터를 찾을 수 없음");
-            return;
-        }
-
-        List<QuestData> list = npcData.NpcQuestList;
-        
-        foreach (var element in list)
-        {
-            if (CheckPriorQuest(element))
-            {
-                playerQuestList.Add(element);
-                Debug.Log($"퀘스트 수령 완료 {element.QuestName}");
-                continue;
-            }
-
-            foreach (var playerQuestelement in playerQuestList)
-            {
-                if (CheckDuplicateQuest(element, playerQuestelement))
-                {
-                    Debug.Log("중복된 퀘스트 수령");
-                }
-
-                if (CheckPriorQuest(element, playerQuestelement))
-                {
-                    Debug.Log($"선행 퀘스트 수행 필요 : {element.QuestName}");
-                }
-            }
-            
-        }
         
     }
 

@@ -209,6 +209,6 @@ public class ChatPrint : MonoBehaviour
                 break;
             }
         }
-        manager.initQuest(chattingNPCId);
+        // manager.InitQuest(chattingNPCId);
     }
 }

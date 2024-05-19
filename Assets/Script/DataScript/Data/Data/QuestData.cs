@@ -1,8 +1,16 @@
 using Script.DataScript.Data.Interface;
 using UnityEngine;
 
+public enum QuestType
+{
+    MainQuest,
+    SubQuest,
+    DailyQuest
+}
+
 public class QuestData : IData
 {
+    private QuestType questType;
     private int questId;
     private int nextQuestId;
     private int previousQuestId;
@@ -24,7 +32,12 @@ public class QuestData : IData
             return true;
         return false;
     }
-    
+
+    public QuestType QuestType
+    {
+        get => questType;
+        set => questType = value;
+    }
     public int QuestId
     {
         get => questId;

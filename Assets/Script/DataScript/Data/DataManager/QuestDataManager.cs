@@ -13,7 +13,7 @@ public class QuestDataManager : MonoBehaviour
     private static string questSheetAddress =
         "https://docs.google.com/spreadsheets/d/1ZeUuIqWMsNimTG9pKzrsbSvd5VKzeubUrnuxRmpg-wg";
 
-    private static string questSheetDataRange = "A2:G";
+    private static string questSheetDataRange = "A2:H";
     private static string questDataSheetId = "0";
     
     public List<QuestData> questDataList;
