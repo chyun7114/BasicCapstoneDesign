@@ -9,7 +9,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     public Animator animator;
     private Rigidbody rb;

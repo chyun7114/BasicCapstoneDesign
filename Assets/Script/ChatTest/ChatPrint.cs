@@ -195,7 +195,7 @@ public class ChatPrint : MonoBehaviour
     void ChatClose()
     {
         Camera.main.GetComponent<CameraScript>().EndChat();
-        player.GetComponent<NewBehaviourScript>().EndChat();
+        player.GetComponent<PlayerScript>().EndChat();
         isChatting = false;
         chatpanel.SetActive(false);
         runText.SetActive(true);
