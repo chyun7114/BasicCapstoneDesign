@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Reflection;
 using UnityEngine;
 
@@ -13,10 +14,11 @@ public class DialogueDataManager : MonoBehaviour
     private static string dialogueSheetAddress =
         "https://docs.google.com/spreadsheets/d/1bP_gWBIkRQGeJ9XJTMHWnvTFsLQ180DP7MQvgmfpfQk";
 
-    private static string dialogueSheetDataRange = "A2:F";
+    private static string dialogueSheetDataRange = "A2:G";
     private static string dialogueDataSheetId = "0";
 
     public List<DialogueData> dialogueDataList;
+    public Dictionary<int, List<DialogueData>> dialogueDictionary;
     
     private string dialogueDatas;
     
@@ -68,11 +70,17 @@ public class DialogueDataManager : MonoBehaviour
         // 할당된 데이터를 사용하여 NPC 데이터 리스트 생성
         dialogueDataList = GetDatas(dialogueDatas);
         Debug.Log("DIALOGUE DATA LOAD COMPLETE");
-        // 테스트 코드 입력
-        // foreach (QuestData element in questDataList)
-        // {
-        //     Debug.Log(element.QuestId);
-        // }
+
+        dialogueDictionary = new Dictionary<int, List<DialogueData>>();
+        
+        foreach (var dialogue in dialogueDataList)
+        {
+            if (!dialogueDictionary.ContainsKey(dialogue.DialogueGroupId))
+            {
+                dialogueDictionary[dialogue.DialogueGroupId] = new List<DialogueData>();
+            }
+            dialogueDictionary[dialogue.DialogueGroupId].Add(dialogue);
+        }
     }
     
     

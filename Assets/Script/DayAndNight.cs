@@ -18,7 +18,9 @@ public class DayAndNight : MonoBehaviour
         dayFogDensity = RenderSettings.fogDensity;
     }
 
-    void Update()
+    
+    // 낮과 밤을 바꾸는 기능
+    void SetDayAndNight()
     {
         // 계속 태양을 X 축 중심으로 회전. 현실시간 1초에  0.1f * secondPerRealTimeSecond 각도만큼 회전
         transform.Rotate(Vector3.right, 0.1f * secondPerRealTimeSecond * Time.deltaTime);

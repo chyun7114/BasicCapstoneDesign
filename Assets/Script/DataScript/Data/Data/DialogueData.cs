@@ -14,6 +14,7 @@ public class DialogueData : IData
     
     private string dialogueString;
     private string npcName;
+    private int dialogueGroupId;
 
     // override method
     public void print()
@@ -57,6 +58,12 @@ public class DialogueData : IData
     {
         get => questId;
         set => questId = value;
+    }
+    
+    public int DialogueGroupId
+    {
+        get => dialogueGroupId;
+        set => dialogueGroupId = value;
     }
 
     public string DialogueString

@@ -107,6 +107,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             if(chatEnabled)
             {
+                animator.SetBool("IsTalk" ,true);
                 runText.SetActive(false);
                 chatting.SetActive(true);
                 whileChatting=true;
@@ -153,5 +154,6 @@ public class NewBehaviourScript : MonoBehaviour
     public void EndChat()
     {
         whileChatting=false;
+        animator.SetBool("IsTalk", false);
     }
 }

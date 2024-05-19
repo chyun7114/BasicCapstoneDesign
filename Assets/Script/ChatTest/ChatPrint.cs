@@ -25,23 +25,24 @@ public class ChatPrint : MonoBehaviour
     private bool isTyping = false;
     private bool isChatting = false;
     
-    private string strtoType;
+    private DialogueData strtoType;
     private string chattingNPC;
     private int chattingNPCId;
     
     IEnumerator typeCoroutine;
     
     private GameObject chatpanel;
-    private GameObject player;
+    [SerializeField] public GameObject player;
     
     private int[] currentchat = new int[50];
     //임시 변수, 현재 대화진도 저장 후 불러오거나 퀘스트 진도에 따라 대화가 달라지게 구현 후 지울 것
 
-
+    private Dictionary<int, List<DialogueData>> dialogueDictionary;
+    int currentDialogeId = 0;
+    
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player");
         dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         questManager = GameObject.Find("QuestManager");
         changeSpeed();
@@ -49,6 +50,7 @@ public class ChatPrint : MonoBehaviour
         chatpanel.SetActive(false);
         dialogueList = dataManager.dialogueDataManager.GetList;
         npcList = dataManager.npcDataManager.NPCList;
+        dialogueDictionary = dataManager.dialogueDataManager.dialogueDictionary;
     }
     void changeSpeed()
     {
@@ -73,7 +75,7 @@ public class ChatPrint : MonoBehaviour
     }
     public void ChatPrinting(string str)
     {
-        strtoType=str;
+        strtoType.DialogueString = str;
         if(delay!=0f)
         {
             chatText.text="";
@@ -86,14 +88,14 @@ public class ChatPrint : MonoBehaviour
     IEnumerator typing()
     {
         int count = 0;
-        while(count != strtoType.Length)
+        while(count != strtoType.DialogueString.Length)
         {
-            if(count<strtoType.Length)
+            if(count<strtoType.DialogueString.Length)
             {
-                chatText.text += strtoType[count];
+                chatText.text += strtoType.DialogueString[count];
                 count++;
             }
-            if(count==strtoType.Length)isTyping=false;
+            if(count==strtoType.DialogueString.Length)isTyping=false;
             yield return new WaitForSeconds(delay);
         }
     }
@@ -106,7 +108,7 @@ public class ChatPrint : MonoBehaviour
             if(isTyping)
             {
                 StopCoroutine(typeCoroutine);
-                chatText.text=strtoType;
+                chatText.text=strtoType.DialogueString;
                 isTyping=false;
                 typeCoroutine=null;
             }
@@ -115,7 +117,8 @@ public class ChatPrint : MonoBehaviour
                 strtoType = nextChat();
                 if(strtoType!=null)
                 {
-                    ChatPrinting(strtoType);
+                    speakerName.text = strtoType.NpcName;
+                    ChatPrinting(strtoType.DialogueString);
                 }
                 else
                 {
@@ -129,38 +132,64 @@ public class ChatPrint : MonoBehaviour
         speakerName.text=npcName;
         chatpanel.SetActive(true);
         isChatting=true;
+        
         chattingNPC=npcName;
+        
         strtoType = nextChat();
+        
         if(strtoType!=null)
         {
-            ChatPrinting(strtoType);
+            ChatPrinting(strtoType.DialogueString);
         }
         else
         {
             ChatClose();
         }
     }
-    string nextChat()
+    
+    DialogueData nextChat()
     {
-        foreach(var element in dialogueList)
+        int dialogueGroupId = -1;
+
+        foreach (var element in dialogueList)
         {
-            // Debug.Log(element.NpcName);
-            if(chattingNPC.Equals(element.NpcName))
+            if (chattingNPC.Equals(element.NpcName))
             {
-                // Debug.Log("Found");
-                if(currentchat[element.NPCId]==9999)
-                {
-                    // 밑에 코드 없으면 한 npc에게 한번만 대화 할 수 있어서 수정함
-                    currentchat[element.NPCId] = 0;
-                    return null;
-                }
-                else if(currentchat[element.NPCId]==0 ||currentchat[element.NPCId]==element.DialogueId)
-                {
-                    currentchat[element.NPCId]=element.NextDialogueId;
-                    return element.DialogueString;
-                }
+                dialogueGroupId = element.DialogueGroupId;
+                break;
             }
         }
+
+        List<DialogueData> currentDialogueList = dialogueDictionary[dialogueGroupId];
+
+        if (currentDialogueList.Count <= currentDialogeId)
+        {
+            currentDialogeId = 0;
+            return null;
+        }
+        
+        return currentDialogueList[currentDialogeId++];
+        
+        // foreach(var element in dialogueList)
+        // {
+        //     // Debug.Log(element.NpcName);
+        //     if(chattingNPC.Equals(element.NpcName))
+        //     {
+        //         // Debug.Log("Found");
+        //         if(currentchat[element.NPCId]==9999)
+        //         {
+        //             // 밑에 코드 없으면 한 npc에게 한번만 대화 할 수 있어서 수정함
+        //             currentchat[element.NPCId] = 0;
+        //             return null;
+        //         }
+        //         else if(currentchat[element.NPCId]==0 ||currentchat[element.NPCId]==element.DialogueId)
+        //         {
+        //             currentchat[element.NPCId]=element.NextDialogueId;
+        //             return element.DialogueString;
+        //         }
+        //     }
+        // }
+        
         return null;
     }
     void ChatClose()
