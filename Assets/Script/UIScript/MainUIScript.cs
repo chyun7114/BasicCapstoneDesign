@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class MainUIScript : MonoBehaviour
 {
+    private GameObject menuPanel;
+    private GameObject saveGamePanel;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        menuPanel = GameObject.Find("Canvas").transform.Find("MenuPanel").gameObject;
+        saveGamePanel = GameObject.Find("Canvas").transform.Find("SaveGamePanel").gameObject;
+        menuPanel.SetActive(false);
+        saveGamePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -17,10 +23,27 @@ public class MainUIScript : MonoBehaviour
         
     }
 
-    public void OnClickSaveButton()
+    public void OnClickSaveAndExitButton()
+    {
+        menuPanel.SetActive(false);
+        saveGamePanel.SetActive(true);
+    }
+
+    public void OnClickXButtonInSaveAndExit()
+    {
+        menuPanel.SetActive(true);
+        saveGamePanel.SetActive(false);
+    }
+
+    public void OnClickXButtonInMenuPanel()
+    {
+        menuPanel.SetActive(false);
+    }
+
+    public void OnClickSaveSlot(GameObject saveSlotNum)
     {
         SaveDataManager manager = GameObject.Find("DataManager").GetComponent<SaveDataManager>();
-        manager.SaveDataInJson();
-        SceneManager.LoadScene("GameStart");
+        manager.SaveDataInJson(saveSlotNum);
+        TitleUIScript.LoadScene("GameStart");
     }
 }

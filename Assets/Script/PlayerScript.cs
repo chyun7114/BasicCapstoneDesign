@@ -28,11 +28,13 @@ public class PlayerScript : MonoBehaviour
     private GameObject PressE;
     public GameObject chatting;
     public GameObject chatManager;
+    public GameObject menuPanel;
     
     public List<NPCData> npcList;
     
     private bool chatEnabled = false;
     private bool whileChatting = false;
+    private bool isMenuPanelOpen = false;
     private string nearNPC;
     
     // Start is called before the first frame update
@@ -100,7 +102,7 @@ public class PlayerScript : MonoBehaviour
             isRun = isRun ? false : true;
         }
         
-        runText.GetComponent<TextMeshProUGUI>().text = (isRun == true ? "run" : "walk");
+        // runText.GetComponent<TextMeshProUGUI>().text = (isRun == true ? "run" : "walk");
         
         // 대화 시작 키 => e키 누르면 대화 시작 및 대화 진행
         if(Input.GetKeyDown(KeyCode.E))
@@ -108,7 +110,6 @@ public class PlayerScript : MonoBehaviour
             if(chatEnabled)
             {
                 animator.SetBool("IsTalk" ,true);
-                runText.SetActive(false);
                 chatting.SetActive(true);
                 whileChatting=true;
                 Camera.main.GetComponent<CameraScript>().StartChat();
@@ -120,6 +121,21 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.I))
         {
             SceneManager.LoadScene("ItemListScene");
+        }
+        
+        // 종료 메뉴 키 => esc버튼으로 동작
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            if (isMenuPanelOpen)
+            {
+                isMenuPanelOpen = false;
+                menuPanel.SetActive(false);
+            }
+            else
+            {
+                isMenuPanelOpen = true;
+                menuPanel.SetActive(true);
+            }
         }
     }
     

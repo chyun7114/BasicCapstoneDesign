@@ -44,7 +44,6 @@ public class LoadGameUIScript : MonoBehaviour
                 Button button = loadGamePanel.GetComponent<Button>();
 
                 button.interactable = false;
-
             }
             else
             {

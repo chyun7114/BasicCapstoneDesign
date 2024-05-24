@@ -38,9 +38,10 @@ public class TitleUIScript : MonoBehaviour
     public void OnclickStartGameButtonButton()
     {
         GameObject inputText = inputCharacterPanel.transform.Find("InputCharacterNameField").gameObject;
-        string characterName = inputText.GetComponent<TextMeshProUGUI>().text;
-            
+        string characterName = inputText.GetComponent<TMP_InputField>().text;
+        
         dataManager.GetComponent<PlayerData>().PlayerName = characterName;
+        inputCharacterPanel.SetActive(false);
         // 게임 시작 버튼 누를시 데이터 로드 후 게임 시작
         dataManager.LoadDataManager("Street");
     }

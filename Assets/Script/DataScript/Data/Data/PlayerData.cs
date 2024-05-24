@@ -11,12 +11,13 @@ public class PlayerData : MonoBehaviour, IData
 
     private List<QuestData> playerQuestList;
     private List<ItemData> playerItemList;
-
+    public Vector3 playerPosition;
+    
     private void Start()
     {
-        playerName = "abc";
         playerItemList = new List<ItemData>();
         playerQuestList = new List<QuestData>();
+        playerPosition = new Vector3(0, 0, 0);
         
         DontDestroyOnLoad(gameObject);
     }
@@ -31,7 +32,11 @@ public class PlayerData : MonoBehaviour, IData
         return false;
     }
     
-    public string PlayerName { get; set; }
+    public string PlayerName 
+    { 
+        get => playerName;
+        set => playerName = value;
+    }
 
     public List<QuestData> PlayerQuestList
     {

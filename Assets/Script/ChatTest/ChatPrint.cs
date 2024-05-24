@@ -5,7 +5,6 @@ using TMPro;
 
 public class ChatPrint : MonoBehaviour
 {
-    public GameObject runText;
     public GameObject questManager;
     public List<DialogueData> dialogueList;
     public List<NPCData> npcList;
@@ -198,7 +197,6 @@ public class ChatPrint : MonoBehaviour
         player.GetComponent<PlayerScript>().EndChat();
         isChatting = false;
         chatpanel.SetActive(false);
-        runText.SetActive(true);
 
         QuestManager manager = questManager.GetComponent<QuestManager>();
         foreach (var element in npcList)

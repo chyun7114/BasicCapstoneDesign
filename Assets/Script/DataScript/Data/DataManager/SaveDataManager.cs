@@ -11,6 +11,8 @@ public class SaveData
     // 나중에 플레이어의 마지막 저장 좌표 등의 데이터 추가 가능
     public string playerName;
     public string saveTime;
+
+    public Vector3 playerPosition;
     
     public List<int> playerItemIdList;
     public List<int> playerQuestIdList;
@@ -37,8 +39,14 @@ public class SaveDataManager : MonoBehaviour
         
     }
 
-    public void SaveDataInJson()
+    public void SaveDataInJson(GameObject clickedButton)
     {
+        string clickedButtonName = clickedButton.name;
+        
+        string[] split = clickedButtonName.Split("_");
+        
+        int id = Int32.Parse(split[1]);
+        
         // 파일 이름은 SaveData #.json으로 통일
         SaveData saveData = new SaveData();
         
@@ -55,13 +63,14 @@ public class SaveDataManager : MonoBehaviour
         {
             saveData.playerQuestIdList.Add(element.QuestId);
         }
-
+        
         saveData.playerName = playerData.PlayerName;
         saveData.saveTime =  DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss"));
+        saveData.playerPosition = playerData.playerPosition;
         
         string json = JsonUtility.ToJson(saveData, true);
         // 아이디는 나중에 저장 창 구현시 바꾸기
-        File.WriteAllText(GetJsonPath(1), json);
+        File.WriteAllText(GetJsonPath(id), json);
     }
 
     public void LoadDataInJson(GameObject clickedButton)
