@@ -52,10 +52,12 @@ public class TitleUIScript : MonoBehaviour
         dataManager.LoadDataManager("LoadGameScene");
     }
 
-    public void OnClickExitGameButton()
+    public static void OnClickExitGameButton()
     {
-        // 게임 종료 클릭할 경우
-        // 게임이 종료됨
-        // "게임을 종료하시겠습니까?"이런 멘트 들어간 팝업 띄우면 더 좋을듯
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

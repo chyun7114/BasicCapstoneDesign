@@ -59,7 +59,7 @@ public class LoadGameUIScript : MonoBehaviour
 
     private string GetJsonFileName(int id)
     {
-        return Application.dataPath + "/SaveData/saveData " + id + ".json";
+        return Application.streamingAssetsPath + "/SaveData/saveData " + id + ".json";
     }
     
     public void OnClickExitButton()

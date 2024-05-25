@@ -45,9 +45,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        // 채팅 중이 아니면 카메라를 이동시킴
-        if (!whileChatting)
+        if (!whileChatting || !MainUIScript.isMenuPanelOpen)
         {
             // 마우스 클릭 여부 확인
             if (Input.GetMouseButtonDown(0))

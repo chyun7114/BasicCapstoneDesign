@@ -7,6 +7,8 @@ public class MainUIScript : MonoBehaviour
 {
     private GameObject menuPanel;
     private GameObject saveGamePanel;
+
+    public static bool isMenuPanelOpen = false;
     
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,10 @@ public class MainUIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (menuPanel.activeSelf)
+            isMenuPanelOpen = true;
+        else
+            isMenuPanelOpen = false;
     }
 
     public void OnClickSaveAndExitButton()
@@ -34,7 +39,7 @@ public class MainUIScript : MonoBehaviour
         menuPanel.SetActive(true);
         saveGamePanel.SetActive(false);
     }
-
+    
     public void OnClickXButtonInMenuPanel()
     {
         menuPanel.SetActive(false);
@@ -44,6 +49,11 @@ public class MainUIScript : MonoBehaviour
     {
         SaveDataManager manager = GameObject.Find("DataManager").GetComponent<SaveDataManager>();
         manager.SaveDataInJson(saveSlotNum);
+        TitleUIScript.LoadScene("GameStart");
+    }
+
+    public void onClickExitButton()
+    {
         TitleUIScript.LoadScene("GameStart");
     }
 }

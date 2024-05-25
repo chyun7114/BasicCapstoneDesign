@@ -124,6 +124,6 @@ public class SaveDataManager : MonoBehaviour
     
     private string GetJsonPath(int id)
     {
-        return Path.Combine(Application.dataPath + "/SaveData/", "SaveData " + id + ".json");
+        return Path.Combine(Application.streamingAssetsPath + "/SaveData/", "SaveData " + id + ".json");
     }
 }

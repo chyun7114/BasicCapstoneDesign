@@ -14,8 +14,11 @@ public class ItemUIScript : MonoBehaviour
     public GameObject itemDetailPanelPrefab;
     public DataManager dataManager;
 
+    private GameObject player;
+    private Vector3 playerPosition;
     private GameObject activePanel;
-
+    
+    
     private List<ItemData> itemDataList;
     private List<ItemData> playerItemDataList;
 
@@ -27,6 +30,7 @@ public class ItemUIScript : MonoBehaviour
         dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         itemDataList = dataManager.itemDataManager.GetList;
         playerItemDataList = dataManager.GetComponent<PlayerData>().PlayerItemList;
+        playerPosition = dataManager.GetComponent<PlayerData>().playerPosition;
     }
 
     // Start is called before the first frame update
@@ -45,7 +49,7 @@ public class ItemUIScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            SceneManager.LoadScene("TestScene");
+            SceneManager.LoadScene("Street");
         }
     }
 
@@ -61,8 +65,8 @@ public class ItemUIScript : MonoBehaviour
         for (int i = 0; i < itemDataList.Count; i++)
         {
             // 각 아이템의 위치 계산
-            float dirX = firstDirX + (i % 4) * 120; // 120은 아이템 간 간격
-            float dirY = firstDirY - (i / 4) * 120;
+            float dirX = firstDirX + (i % 4) * 220; // 120은 아이템 간 간격
+            float dirY = firstDirY - (i / 4) * 220;
             Vector3 itemDir = new Vector3(dirX, dirY, 0);
 
             // 프리팹 인스턴스화 및 위치 지정
@@ -111,7 +115,7 @@ public class ItemUIScript : MonoBehaviour
 
     public void ItemUIExit()
     {
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene("Street");
     }
 
     private string GetSpriteImagePath(int id)

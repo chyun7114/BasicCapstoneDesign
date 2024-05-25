@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Script.DataScript.Data.Interface;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour, IData
 {
@@ -12,6 +13,8 @@ public class PlayerData : MonoBehaviour, IData
     private List<QuestData> playerQuestList;
     private List<ItemData> playerItemList;
     public Vector3 playerPosition;
+
+    private GameObject player;
     
     private void Start()
     {
@@ -20,6 +23,15 @@ public class PlayerData : MonoBehaviour, IData
         playerPosition = new Vector3(0, 0, 0);
         
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "Street")
+        {
+            player = GameObject.Find("rose");
+            playerPosition = player.transform.position;
+        }
     }
 
     public void print()
