@@ -44,9 +44,9 @@ public class MainUIScript : MonoBehaviour
         saveGamePanel.SetActive(false);
     }
     
-    public void OnClickXButtonInMenuPanel()
+    public void OnClickXButtonInMenuPanel(GameObject anyPanel)
     {
-        menuPanel.SetActive(false);
+        anyPanel.SetActive(false);
     }
 
     public void OnClickSaveSlot(GameObject saveSlotNum)
