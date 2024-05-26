@@ -41,6 +41,7 @@ public class PlayerScript : MonoBehaviour
     //캐릭터 정보창
     public bool ischarInfoOpen = false;
     public bool check = true;
+    public bool menuPanelcheck = true;
 
     // Start is called before the first frame update
     void Start()
@@ -109,8 +110,8 @@ public class PlayerScript : MonoBehaviour
         
         // runText.GetComponent<TextMeshProUGUI>().text = (isRun == true ? "run" : "walk");
         
-        // 대화 시작 키 => e키 누르면 대화 시작 및 대화 진행
-        if(Input.GetKeyDown(KeyCode.E))
+        // 대화 시작 키 => e키 누르면 대화 시작
+        if(Input.GetKeyDown(KeyCode.E) && !whileChatting)
         {
             if(chatEnabled)
             {
@@ -129,22 +130,32 @@ public class PlayerScript : MonoBehaviour
         }
         
         // 종료 메뉴 키 => esc버튼으로 동작
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            if (isMenuPanelOpen)
-            {
-                isMenuPanelOpen = false;
-                menuPanel.SetActive(false);
-            }
-            else
-            {
-                isMenuPanelOpen = true;
-                menuPanel.SetActive(true);
-            }
-        }
+        OnclickESC();
         OnClickTab();
     }
 
+    public void OnclickESC()
+    {
+        if (Input.GetKey(KeyCode.Escape) && menuPanelcheck)
+        {
+            check = false;
+
+            if (isMenuPanelOpen == false)
+            {
+                isMenuPanelOpen = true;
+                menuPanel.SetActive(isMenuPanelOpen);
+
+            }
+            else
+            {
+                isMenuPanelOpen = false;
+                charInfoPanel.SetActive(isMenuPanelOpen);
+
+            }
+            StartCoroutine(WaitForIt());
+        }
+    }
+    
     public void OnClickTab()
     {
         if (Input.GetKey(KeyCode.Tab) && check)

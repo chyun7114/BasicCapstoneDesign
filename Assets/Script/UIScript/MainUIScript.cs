@@ -10,6 +10,7 @@ public class MainUIScript : MonoBehaviour
     private GameObject charInfoPanel;
     public static bool isMenuPanelOpen = false;
 
+    private PlayerScript playerScript;
     
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class MainUIScript : MonoBehaviour
         menuPanel = GameObject.Find("Canvas").transform.Find("MenuPanel").gameObject;
         saveGamePanel = GameObject.Find("Canvas").transform.Find("SaveGamePanel").gameObject;
         charInfoPanel = GameObject.Find("MainScreen").transform.Find("CharInfo").gameObject;
+        playerScript = GameObject.Find("rose").GetComponent<PlayerScript>();
 
         charInfoPanel.SetActive(false);
         menuPanel.SetActive(false);
@@ -24,25 +26,10 @@ public class MainUIScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (menuPanel.activeSelf)
-            isMenuPanelOpen = true;
-        else
-            isMenuPanelOpen = false;
-        
-    }
-
     public void OnClickSaveAndExitButton()
     {
         menuPanel.SetActive(false);
         saveGamePanel.SetActive(true);
-    }
-
-    public void OnClickXButtonInSaveAndExit()
-    {
-        menuPanel.SetActive(true);
-        saveGamePanel.SetActive(false);
     }
     
     public void OnClickXButtonInMenuPanel(GameObject anyPanel)
