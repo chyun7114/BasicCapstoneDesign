@@ -7,6 +7,7 @@ public class MainUIScript : MonoBehaviour
 {
     private GameObject menuPanel;
     private GameObject saveGamePanel;
+    private GameObject mainScreen;
 
     public static bool isMenuPanelOpen = false;
     
@@ -15,8 +16,11 @@ public class MainUIScript : MonoBehaviour
     {
         menuPanel = GameObject.Find("Canvas").transform.Find("MenuPanel").gameObject;
         saveGamePanel = GameObject.Find("Canvas").transform.Find("SaveGamePanel").gameObject;
+        mainScreen = GameObject.Find("MainScreen");
+     
         menuPanel.SetActive(false);
         saveGamePanel.SetActive(false);
+        mainScreen.SetActive(true);
     }
 
     // Update is called once per frame
