@@ -29,6 +29,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject chatting;
     public GameObject chatManager;
     public GameObject menuPanel;
+    public GameObject charInfoPanel;
     
     public List<NPCData> npcList;
     
@@ -36,7 +37,11 @@ public class PlayerScript : MonoBehaviour
     private bool whileChatting = false;
     private bool isMenuPanelOpen = false;
     private string nearNPC;
-    
+
+    //캐릭터 정보창
+    public bool ischarInfoOpen = false;
+    public bool check = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -137,8 +142,40 @@ public class PlayerScript : MonoBehaviour
                 menuPanel.SetActive(true);
             }
         }
+        OnClickTab();
     }
-    
+
+    public void OnClickTab()
+    {
+        if (Input.GetKey(KeyCode.Tab) && check)
+        {
+            check = false;
+
+            if (ischarInfoOpen == false)
+            {
+                ischarInfoOpen = true;
+                charInfoPanel.SetActive(ischarInfoOpen);
+
+            }
+            else
+            {
+                ischarInfoOpen = false;
+                charInfoPanel.SetActive(ischarInfoOpen);
+
+            }
+            StartCoroutine(WaitForIt());
+        }
+
+    }
+
+    IEnumerator WaitForIt()
+    {
+        yield return new WaitForSeconds(0.3f);
+        check = true;
+    }
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("대화 가능");
