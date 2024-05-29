@@ -53,6 +53,8 @@ public class PlayerScript : MonoBehaviour
         dataManager = GameObject.Find("DataManager");
         PressE = GameObject.Find("PressE");
         npcList = dataManager.GetComponent<NPCDataManager>().NPCList;
+
+        gameObject.transform.position = dataManager.GetComponent<PlayerData>().playerPosition;
     }
 
     void Update()
