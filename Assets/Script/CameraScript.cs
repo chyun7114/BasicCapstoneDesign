@@ -7,7 +7,7 @@ public class CameraScript : MonoBehaviour
     public float yAxis;
     public float xAxis;
     
-    public Transform target;
+    private Transform target;
     
     private float rotSensitive = 3.0f;
     private float dis = 7.5f;
@@ -24,7 +24,9 @@ public class CameraScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.Find("rose");
         // 초기화
+        target = player.transform;
         targetRotation = new Vector3(0, 180, 0); // 약간 아래를 바라보도록 설정 (원하는 각도로 조정 가능)
         transform.eulerAngles = targetRotation;
 

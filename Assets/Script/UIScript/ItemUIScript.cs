@@ -15,7 +15,6 @@ public class ItemUIScript : MonoBehaviour
     public DataManager dataManager;
 
     private GameObject player;
-    private Vector3 playerPosition;
     private GameObject activePanel;
     
     
@@ -30,7 +29,6 @@ public class ItemUIScript : MonoBehaviour
         dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         itemDataList = dataManager.itemDataManager.GetList;
         playerItemDataList = dataManager.GetComponent<PlayerData>().PlayerItemList;
-        playerPosition = dataManager.GetComponent<PlayerData>().playerPosition;
     }
 
     // Start is called before the first frame update

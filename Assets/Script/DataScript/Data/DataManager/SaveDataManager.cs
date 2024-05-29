@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // json 직렬화를 통해 데이터를 저장합니다
 [SerializeField]
@@ -12,7 +13,8 @@ public class SaveData
     public string playerName;
     public string saveTime;
 
-    public Vector3 playerPosition;
+    public Vector3 playerPositionInStreet;
+    public Vector3 playerPositionInHospital;
     
     public List<int> playerItemIdList;
     public List<int> playerQuestIdList;
@@ -66,7 +68,10 @@ public class SaveDataManager : MonoBehaviour
         
         saveData.playerName = playerData.PlayerName;
         saveData.saveTime =  DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss"));
-        saveData.playerPosition = playerData.playerPosition;
+        if(SceneManager.GetActiveScene().name == "Street")
+            saveData.playerPositionInStreet = playerData.playerPositionInStreet;
+        else if (SceneManager.GetActiveScene().name == "Hospital")
+            saveData.playerPositionInHospital = playerData.playerPositionInHospital;
         
         string json = JsonUtility.ToJson(saveData, true);
         // 아이디는 나중에 저장 창 구현시 바꾸기

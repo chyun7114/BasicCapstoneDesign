@@ -12,7 +12,9 @@ public class PlayerData : MonoBehaviour, IData
 
     private List<QuestData> playerQuestList;
     private List<ItemData> playerItemList;
-    public Vector3 playerPosition;
+    
+    public Vector3 playerPositionInStreet;
+    public Vector3 playerPositionInHospital;
 
     private GameObject player;
     
@@ -20,8 +22,10 @@ public class PlayerData : MonoBehaviour, IData
     {
         playerItemList = new List<ItemData>();
         playerQuestList = new List<QuestData>();
-        playerPosition = new Vector3(0, 0, 0);
-        
+        // 나중에 게임 시작시 위치 설정
+        playerPositionInStreet = new Vector3(0, 0, 0);
+        // 병원신 입장 위치 설정
+        playerPositionInHospital = new Vector3(2.57f,0,-3.03f);
         DontDestroyOnLoad(gameObject);
     }
 
@@ -30,7 +34,12 @@ public class PlayerData : MonoBehaviour, IData
         if (SceneManager.GetActiveScene().name == "Street")
         {
             player = GameObject.Find("rose");
-            playerPosition = player.transform.position;
+            playerPositionInStreet = player.transform.position;
+        }
+        else if (SceneManager.GetActiveScene().name == "Hospital")
+        {
+            player = GameObject.Find("rose");
+            playerPositionInHospital = player.transform.position;
         }
     }
 

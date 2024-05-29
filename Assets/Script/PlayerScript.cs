@@ -25,7 +25,7 @@ public class PlayerScript : MonoBehaviour
 
     private GameObject runText;
     public  GameObject dataManager;
-    private GameObject PressE;
+    public GameObject PressE;
     public GameObject chatting;
     public GameObject chatManager;
     public GameObject menuPanel;
@@ -42,19 +42,22 @@ public class PlayerScript : MonoBehaviour
     public bool ischarInfoOpen = false;
     public bool check = true;
     public bool menuPanelcheck = true;
+    private bool isInWarpPoint = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         mainCameraTransform = Camera.main.transform;
-
-        runText = GameObject.Find("IsRun");
+        
         dataManager = GameObject.Find("DataManager");
         PressE = GameObject.Find("PressE");
         npcList = dataManager.GetComponent<NPCDataManager>().NPCList;
-
-        gameObject.transform.position = dataManager.GetComponent<PlayerData>().playerPosition;
+        
+        if(SceneManager.GetActiveScene().name == "Street")
+            gameObject.transform.position = dataManager.GetComponent<PlayerData>().playerPositionInStreet;
+        else if (SceneManager.GetActiveScene().name == "Hospital")
+            gameObject.transform.position = dataManager.GetComponent<PlayerData>().playerPositionInHospital;
     }
 
     void Update()
@@ -124,7 +127,20 @@ public class PlayerScript : MonoBehaviour
                 chatting.GetComponent<ChatPrint>().ChatOpen(nearNPC);
             }
         }
-        
+
+        if (Input.GetKey(KeyCode.E) && isInWarpPoint)
+        {
+            if (SceneManager.GetActiveScene().name == "Street")
+            {
+                TitleUIScript.LoadScene("Hospital");
+            }
+            else if (SceneManager.GetActiveScene().name == "Hospital")
+            {
+                TitleUIScript.LoadScene("Street");
+            }
+            
+        }
+
         // 아이템 도감 진입 키 => I키 누르면 진입 및, esc키와 x버튼 클릭으로 종료
         if (Input.GetKey(KeyCode.I))
         {
@@ -191,19 +207,29 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("대화 가능");
-        // 대화 진행 가능 여부 판단 후 대화 진행
-        foreach (var element in npcList)
+        if (other.CompareTag("Warppoint"))
         {
-            if (other.name.Equals(element.NpcName))
+            Debug.Log("워프 가능");
+            PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
+            isInWarpPoint = true;
+        }
+
+        if (other.CompareTag("NPC"))
+        {
+            Debug.Log("대화 가능");
+            // 대화 진행 가능 여부 판단 후 대화 진행
+            foreach (var element in npcList)
             {
-                chatEnabled=true;
-                nearNPC=other.name;
-                PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
-                Debug.Log($"{element.NpcName}와 대화 진행 가능");
+                if (other.name.Equals(element.NpcName))
+                {
+                    chatEnabled = true;
+                    nearNPC = other.name;
+                    PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
+                    Debug.Log($"{element.NpcName}와 대화 진행 가능");
+                }
             }
         }
-        
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -216,6 +242,13 @@ public class PlayerScript : MonoBehaviour
                 PressE.GetComponent<PressE>().Hide();
             }
         }
+        
+        if (other.CompareTag("Warppoint"))
+        {
+            PressE.GetComponent<PressE>().Hide();
+            isInWarpPoint = false;
+        }
+        
     }
     public void EndChat()
     {
