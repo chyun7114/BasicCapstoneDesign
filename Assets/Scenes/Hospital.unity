@@ -3357,7 +3357,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 37cfdd9c36546984a9d0cd554cf1fed9, type: 2}
     - target: {fileID: 6656849528320928969, guid: 911e4ba22e7a02a4fa4e14d911bbd678, type: 3}
       propertyPath: m_Name
-      value: Large_Door
+      value: StreetWarppoint
       objectReference: {fileID: 0}
     - target: {fileID: 6656849528320928969, guid: 911e4ba22e7a02a4fa4e14d911bbd678, type: 3}
       propertyPath: m_TagString

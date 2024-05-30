@@ -16,6 +16,10 @@ public class PlayerData : MonoBehaviour, IData
     public Vector3 playerPositionInStreet;
     public Vector3 playerPositionInHospital;
 
+    public int talkCount = 0;
+    public int lastTalkId = -1;
+    public int currentTalkId = 0;
+    
     private GameObject player;
     
     private void Start()

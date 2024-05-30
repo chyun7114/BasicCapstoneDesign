@@ -13,6 +13,8 @@ public class SaveData
     public string playerName;
     public string saveTime;
 
+    public int playerTalkCount;
+    
     public Vector3 playerPositionInStreet;
     public Vector3 playerPositionInHospital;
     
@@ -68,6 +70,8 @@ public class SaveDataManager : MonoBehaviour
         
         saveData.playerName = playerData.PlayerName;
         saveData.saveTime =  DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss"));
+        saveData.playerTalkCount = playerData.talkCount;
+        
         if(SceneManager.GetActiveScene().name == "Street")
             saveData.playerPositionInStreet = playerData.playerPositionInStreet;
         else if (SceneManager.GetActiveScene().name == "Hospital")
@@ -125,6 +129,7 @@ public class SaveDataManager : MonoBehaviour
         playerData.PlayerName = loadData.playerName;
         playerData.PlayerItemList = loadItemList;
         playerData.PlayerQuestList = loadQuestList;
+        playerData.talkCount = loadData.playerTalkCount;
     }
     
     private string GetJsonPath(int id)

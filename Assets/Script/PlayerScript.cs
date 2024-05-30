@@ -37,7 +37,8 @@ public class PlayerScript : MonoBehaviour
     private bool whileChatting = false;
     private bool isMenuPanelOpen = false;
     private string nearNPC;
-
+    private string warpPointName = null;
+    
     //캐릭터 정보창
     public bool ischarInfoOpen = false;
     public bool check = true;
@@ -130,11 +131,11 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && isInWarpPoint)
         {
-            if (SceneManager.GetActiveScene().name == "Street")
+            if (warpPointName.Equals("HospitalWarppoint"))
             {
                 TitleUIScript.LoadScene("Hospital");
             }
-            else if (SceneManager.GetActiveScene().name == "Hospital")
+            else if (warpPointName.Equals("StreetWarppoint"))
             {
                 TitleUIScript.LoadScene("Street");
             }
@@ -212,6 +213,7 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("워프 가능");
             PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
             isInWarpPoint = true;
+            warpPointName = other.name;
         }
 
         if (other.CompareTag("NPC"))

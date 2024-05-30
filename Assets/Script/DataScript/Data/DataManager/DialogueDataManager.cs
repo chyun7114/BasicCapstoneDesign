@@ -14,7 +14,7 @@ public class DialogueDataManager : MonoBehaviour
     private static string dialogueSheetAddress =
         "https://docs.google.com/spreadsheets/d/1bP_gWBIkRQGeJ9XJTMHWnvTFsLQ180DP7MQvgmfpfQk";
 
-    private static string dialogueSheetDataRange = "A2:G";
+    private static string dialogueSheetDataRange = "A2:H";
     private static string dialogueDataSheetId = "0";
 
     public List<DialogueData> dialogueDataList;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using TMPro;
 
@@ -32,24 +33,41 @@ public class ChatPrint : MonoBehaviour
     
     private GameObject chatpanel;
     [SerializeField] public GameObject player;
+    public PlayerData playerData;
     
-    private int[] currentchat = new int[50];
-    //임시 변수, 현재 대화진도 저장 후 불러오거나 퀘스트 진도에 따라 대화가 달라지게 구현 후 지울 것
 
     private Dictionary<int, List<DialogueData>> dialogueDictionary;
     int currentDialogeId = 0;
+    private int currentDialogeGroupId = -1;
+    int dialogueGroupId = -1;
+    public bool isFreeChat = false;
+
+    public StoryManager storyManager;
+
+    private Dictionary<int, bool> isChatGroupEnd = new Dictionary<int, bool>();
     
     // Start is called before the first frame update
     void Start()
     {
+        storyManager = GameObject.Find("StoryManager").GetComponent<StoryManager>();
         dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         questManager = GameObject.Find("QuestManager");
         changeSpeed();
         chatpanel = GameObject.Find("ChatCanvas");
+        playerData = dataManager.GetComponent<PlayerData>();
         chatpanel.SetActive(false);
         dialogueList = dataManager.dialogueDataManager.GetList;
         npcList = dataManager.npcDataManager.NPCList;
         dialogueDictionary = dataManager.dialogueDataManager.dialogueDictionary;
+        foreach (var element in dialogueDictionary)
+        {
+            isChatGroupEnd.Add(element.Key, false);
+        }
+
+        foreach (var element in isChatGroupEnd)
+        {
+            Debug.Log($"{element.Key} , {element.Value}");
+        }
     }
     void changeSpeed()
     {
@@ -116,7 +134,11 @@ public class ChatPrint : MonoBehaviour
                 strtoType = nextChat();
                 if(strtoType!=null)
                 {
-                    speakerName.text = strtoType.NpcName;
+                    if(strtoType.NpcName == "나레이션")
+                        speakerName.text = "";
+                    else
+                        speakerName.text = strtoType.NpcName;
+                    
                     ChatPrinting(strtoType.DialogueString);
                 }
                 else
@@ -129,12 +151,10 @@ public class ChatPrint : MonoBehaviour
     public void ChatOpen(string npcName)
     {
         speakerName.text=npcName;
-        chatpanel.SetActive(true);
-        isChatting=true;
-        
         chattingNPC=npcName;
-        
+        chatpanel.SetActive(true);
         strtoType = nextChat();
+        isChatting=true;
         
         if(strtoType!=null)
         {
@@ -148,18 +168,41 @@ public class ChatPrint : MonoBehaviour
     
     DialogueData nextChat()
     {
-        int dialogueGroupId = -1;
-
-        foreach (var element in dialogueList)
+        if (!isChatting)
         {
-            if (chattingNPC.Equals(element.NpcName))
+            foreach (var element in dialogueList)
             {
-                dialogueGroupId = element.DialogueGroupId;
-                break;
+                // 대화 시작하는 npc를 찾습니다
+                if (element.StartNPC == 9999)
+                {
+                    continue;
+                }
+
+                if (isFreeChat)
+                {
+                    dialogueGroupId = storyManager.dialogueGroupId;
+                    currentDialogeGroupId = storyManager.dialogueGroupId;
+                    isChatGroupEnd[storyManager.dialogueGroupId] = true;
+                    Debug.Log($"현재 다이얼 로그 그룹 아이디 : {dialogueGroupId}");
+                    break;
+                }
+                
+                // 한번 한 대화는 다시 안나오게 => 순차적 퀘스트 진행을 위함
+                if (chattingNPC.Equals(npcList[element.StartNPC].NpcName) && !isChatGroupEnd[element.DialogueGroupId])
+                {
+                    dialogueGroupId = element.DialogueGroupId;
+                    currentDialogeGroupId = element.DialogueGroupId;
+                    isChatGroupEnd[element.DialogueGroupId] = true;
+                    Debug.Log($"현재 다이얼 로그 그룹 아이디 : {dialogueGroupId}");
+                    break;
+                }
+                
+                // 나중에 퀘스트랑 관련 없는 대화 셋 리턴하게 만들겁니다.
             }
+
         }
 
-        List<DialogueData> currentDialogueList = dialogueDictionary[dialogueGroupId];
+        List<DialogueData> currentDialogueList = SetNextDialogueSet(currentDialogeGroupId);
 
         if (currentDialogueList.Count <= currentDialogeId)
         {
@@ -189,24 +232,45 @@ public class ChatPrint : MonoBehaviour
         //     }
         // }
         
-        return null;
     }
+
+    public List<DialogueData> SetNextDialogueSet(int groupId)
+    {
+        return dialogueDictionary[groupId];
+    }
+    
     void ChatClose()
     {
         Camera.main.GetComponent<CameraScript>().EndChat();
         player.GetComponent<PlayerScript>().EndChat();
         isChatting = false;
         chatpanel.SetActive(false);
-
-        QuestManager manager = questManager.GetComponent<QuestManager>();
-        foreach (var element in npcList)
+        
+        // 채팅 종료시 talkCount를 증가시켜 스토리 진행
+        // 조건에 맞는지는 항상 확인!!
+        
+        // dialogueGroupId가 점차 올라가는 방식으로 진행하여
+        // 일정 수준에 도달할 때까지 talkCount 올린다
+        if (playerData.lastTalkId < currentDialogeGroupId)
         {
-            if (element.matches(chattingNPC))
-            {
-                chattingNPCId = element.NpcId;
-                break;
-            }
+            playerData.lastTalkId = currentDialogeGroupId;
+            playerData.talkCount++;
+            Debug.Log(playerData.talkCount);
         }
+        else
+        {
+            playerData.currentTalkId = currentDialogeGroupId;
+        }
+
+        // QuestManager manager = questManager.GetComponent<QuestManager>();
+        // foreach (var element in npcList)
+        // {
+        //     if (element.matches(chattingNPC))
+        //     {
+        //         chattingNPCId = element.NpcId;
+        //         break;
+        //     }
+        // }
         // manager.InitQuest(chattingNPCId);
     }
 }
