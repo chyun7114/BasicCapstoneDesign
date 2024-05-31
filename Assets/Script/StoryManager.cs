@@ -16,6 +16,7 @@ public class StoryManager : MonoBehaviour
     public GameObject questInfo;
     
     private int mainQuestNum = 0;
+    private int subQuestNum = 0;
     public int dialogueGroupId = 0;
 
     void Awake()
@@ -37,9 +38,15 @@ public class StoryManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         
         // 스토리 루틴 시작
-        StartCoroutine(StoryRoutine());
+        StartCoroutine(StartGame());
     }
 
+    private IEnumerator StartGame()
+    {
+        yield return StartCoroutine(StoryRoutine());
+        yield return StartCoroutine(SubQuestRoutine());
+    }
+    
     private IEnumerator StoryRoutine()
     {
         // 게임 시작
@@ -60,6 +67,7 @@ public class StoryManager : MonoBehaviour
             
             // 나레이션 으로 서브퀘스트 받고
             ChatSelfStart("나레이션", 4);
+            subQuestNum++;
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 놀이터로 이동하기";
             
             // 놀이터 가는 시간 기다리기
@@ -67,13 +75,17 @@ public class StoryManager : MonoBehaviour
             // 10초 후 자동 이동
             // 현재 위치가 놀이터인지 판단하기
             yield return StartCoroutine(CheckNowPlace("playground"));
-            Debug.Log("현재 장소 놀이터!");
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 놀이터에서 어린왕자 찾기";
             ChatSelfStart("나레이션", 5);
             
             // 얘가 진짜 어디갔지?
             yield return new WaitForSeconds(10f);
             ChatSelfStart("장미", 6);
+            
+            Debug.Log("프롤로그 종료");
+            mainQuestNum++;
+            GetMainQuest(mainQuestNum);
+            Debug.Log("메인퀘스트 #1 획득 완료!!");
             
             // 모래성 차는 동작
             yield return new WaitForSeconds(10f);
@@ -82,6 +94,7 @@ public class StoryManager : MonoBehaviour
             // 여우 나오고 도망치게 합니다
             yield return new WaitForSeconds(10f);
             ChatSelfStart("장미", 8);
+            // 일일 퀘스트 여우에게 밥을 주자 추가 예정
             
             // #2-6: Day+5, 집 앞
             // 집앞으로 이동하게 합니다
@@ -96,18 +109,19 @@ public class StoryManager : MonoBehaviour
             player.transform.position = new Vector3(80.07f, 0, -26.16f);
             ChatSelfStart("장미",10);
             
-            
-            Debug.Log("프롤로그 종료");
-            mainQuestNum++;
-            GetMainQuest(mainQuestNum);
-            Debug.Log("메인퀘스트 #1 획득 완료!!");
-            
-            
             // 이후 로직 작성
             break;
         }
     }
 
+    private IEnumerator SubQuestRoutine()
+    {
+        while (true)
+        {
+            yield return StartCoroutine(CheckGetSubQuest(1));
+        }
+    }
+    
     private void ChatSelfStart(string npcName, int id)
     {
         dialogueGroupId = id;
@@ -136,6 +150,14 @@ public class StoryManager : MonoBehaviour
         QuestData questData = dataManager.questDataManager.questDataList[questNum - 1];
         playerData.PlayerQuestList.Add(questData);
         Debug.Log("메인퀘스트 #1 리스트 저장 완료!!");
+    }
+
+    private IEnumerator CheckGetSubQuest(int questNum)
+    {
+        while (subQuestNum != questNum)
+        {
+            yield return null;
+        }
     }
     
     // Update is called once per frame

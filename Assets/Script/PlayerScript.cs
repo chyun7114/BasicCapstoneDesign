@@ -44,6 +44,7 @@ public class PlayerScript : MonoBehaviour
     public bool check = true;
     public bool menuPanelcheck = true;
     private bool isInWarpPoint = false;
+    private bool isStair = false;
 
     // Start is called before the first frame update
     void Start()
@@ -194,6 +195,7 @@ public class PlayerScript : MonoBehaviour
 
             }
             StartCoroutine(WaitForIt());
+            check = true;
         }
 
     }
@@ -201,13 +203,14 @@ public class PlayerScript : MonoBehaviour
     IEnumerator WaitForIt()
     {
         yield return new WaitForSeconds(0.3f);
-        check = true;
     }
-
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("road") && !isStair)
+        {
+            isStair = true;
+        }
         if (other.tag == "EnterTrigger")
         {
             SetEnterPlace(other.name);
@@ -260,7 +263,13 @@ public class PlayerScript : MonoBehaviour
         {
             dataManager.GetComponent<PlayerData>().nowPlace = null;
         }
+
+        if (other.CompareTag("road") && isStair)
+        {
+            isStair = false;
+        }
     }
+    
     public void EndChat()
     {
         whileChatting=false;

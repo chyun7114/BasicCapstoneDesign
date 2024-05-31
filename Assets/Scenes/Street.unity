@@ -65886,6 +65886,10 @@ PrefabInstance:
       propertyPath: charInfoPanel
       value: 
       objectReference: {fileID: 212815388}
+    - target: {fileID: 2903062766917983884, guid: 1cf20e50d58b0654f8a9639f1f9e89ed, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 3198859995790369191, guid: 1cf20e50d58b0654f8a9639f1f9e89ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.05
