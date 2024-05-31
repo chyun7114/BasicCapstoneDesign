@@ -61,12 +61,13 @@ public class StoryManager : MonoBehaviour
             // 나레이션 으로 서브퀘스트 받고
             ChatSelfStart("나레이션", 4);
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 놀이터로 이동하기";
+            
             // 놀이터 가는 시간 기다리기
             // 어린왕자 놀이터로 이동시킴
             // 10초 후 자동 이동
-            yield return new WaitForSeconds(10f);
-            player.transform.position = new Vector3(80.07f, 0, -26.16f);
-            
+            // 현재 위치가 놀이터인지 판단하기
+            yield return StartCoroutine(CheckNowPlace("playground"));
+            Debug.Log("현재 장소 놀이터!");
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 놀이터에서 어린왕자 찾기";
             ChatSelfStart("나레이션", 5);
             
@@ -119,6 +120,14 @@ public class StoryManager : MonoBehaviour
         while (playerData.talkCount < i)
         {
             yield return null; // Wait until talkCount reaches i
+        }
+    }
+
+    private IEnumerator CheckNowPlace(string placeName)
+    {
+        while (playerData.nowPlace != placeName)
+        {
+            yield return null;      // 지정 장소로 이동할 때까지 대기
         }
     }
 

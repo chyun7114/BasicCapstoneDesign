@@ -208,6 +208,11 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "EnterTrigger")
+        {
+            SetEnterPlace(other.name);
+        }
+        
         if (other.CompareTag("Warppoint"))
         {
             Debug.Log("워프 가능");
@@ -250,11 +255,31 @@ public class PlayerScript : MonoBehaviour
             PressE.GetComponent<PressE>().Hide();
             isInWarpPoint = false;
         }
-        
+
+        if (other.tag == "EnterTrigger")
+        {
+            dataManager.GetComponent<PlayerData>().nowPlace = null;
+        }
     }
     public void EndChat()
     {
         whileChatting=false;
         animator.SetBool("IsTalk", false);
+    }
+    
+    
+    // 현재 플레이어가 어디 위치로 이동하였는지 알려줌
+    public void SetEnterPlace(string placeName)
+    {
+        switch (placeName)
+        {
+            case "PlaygroundEnter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "playground";
+                Debug.Log("놀이터 도착!");
+                break;
+            default:
+                dataManager.GetComponent<PlayerData>().nowPlace = null;
+                break;
+        }
     }
 }
