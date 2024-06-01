@@ -70,7 +70,7 @@ public class StoryManager : MonoBehaviour
             
             // 다음 어린왕자와 대화함
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 어린왕자와 대화하기";
-            yield return StartCoroutine(CheckLastChatNPC("어린왕자"));
+            yield return StartCoroutine(CheckInitialConversations(3));
             // 나레이션 으로 서브퀘스트 받고
             ChatSelfStart("나레이션", 4);
             littlePrince.transform.position = new Vector3(0, 0, 0);
@@ -126,7 +126,10 @@ public class StoryManager : MonoBehaviour
             yield return StartCoroutine(CheckNowScene("Hospital"));
             // 신 이동시 필요
             SetGameObject();
-            yield return StartCoroutine(CheckLastChatNPC("아빠"));
+            // 일단 여기 오류나요....
+            ChatSelfStart("나레이션", 12);
+            
+            // 여기부터 짜주세요....
             
             // 이후 로직 작성
             break;
@@ -143,6 +146,7 @@ public class StoryManager : MonoBehaviour
     
     private void ChatSelfStart(string npcName, int id)
     {
+        chatPrint.isFreeChat = true;
         dialogueGroupId = id;
         chatPrint.ChatOpen(npcName);
     }

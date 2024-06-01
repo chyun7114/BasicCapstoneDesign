@@ -44,7 +44,7 @@ public class ChatPrint : MonoBehaviour
 
     public StoryManager storyManager;
 
-    private Dictionary<int, bool> isChatGroupEnd = new Dictionary<int, bool>();
+    public Dictionary<int, bool> isChatGroupEnd = new Dictionary<int, bool>();
     
     // Start is called before the first frame update
     void Start()
@@ -263,6 +263,7 @@ public class ChatPrint : MonoBehaviour
             playerData.currentTalkId = currentDialogeGroupId;
         }
 
+        isFreeChat = false;
         // QuestManager manager = questManager.GetComponent<QuestManager>();
         // foreach (var element in npcList)
         // {
