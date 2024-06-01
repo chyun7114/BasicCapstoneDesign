@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StoryManager : MonoBehaviour
 {
@@ -21,12 +22,7 @@ public class StoryManager : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.Find("rose");
-        littlePrince = GameObject.Find("어린 왕자");
-        questInfo = GameObject.Find("MainScreen").transform.Find("QuestInfo").gameObject;
-        playerData = GameObject.Find("DataManager").GetComponent<PlayerData>();
-        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
-        chatPrint = GameObject.Find("Chat").GetComponent<ChatPrint>();
+        SetGameObject();
         
         if (instance != null)
         {
@@ -41,6 +37,16 @@ public class StoryManager : MonoBehaviour
         StartCoroutine(StartGame());
     }
 
+    private void SetGameObject()
+    {
+        player = GameObject.Find("rose");
+        littlePrince = GameObject.Find("어린 왕자");
+        questInfo = GameObject.Find("MainScreen").transform.Find("QuestInfo").gameObject;
+        playerData = GameObject.Find("DataManager").GetComponent<PlayerData>();
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
+        chatPrint = GameObject.Find("Chat").GetComponent<ChatPrint>();
+    }
+    
     private IEnumerator StartGame()
     {
         yield return StartCoroutine(StoryRoutine());
@@ -53,7 +59,8 @@ public class StoryManager : MonoBehaviour
         while (true)
         {
             // 초반 대화를 순서대로 끝마치는 경우 메인퀘스트 1번 얻음
-            yield return StartCoroutine(CheckInitialConversations(1));
+            yield return StartCoroutine(CheckLastChatNPC("어린 왕자"));
+            playerData.lastChatNPC = null;
             
             // 어린왕자와 대화 이후 5초 대기
             yield return new WaitForSeconds(5f);
@@ -63,23 +70,23 @@ public class StoryManager : MonoBehaviour
             
             // 다음 어린왕자와 대화함
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 어린왕자와 대화하기";
-            yield return StartCoroutine(CheckInitialConversations(3));
-            
+            yield return StartCoroutine(CheckLastChatNPC("어린왕자"));
             // 나레이션 으로 서브퀘스트 받고
             ChatSelfStart("나레이션", 4);
+            littlePrince.transform.position = new Vector3(0, 0, 0);
+            
             subQuestNum++;
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 놀이터로 이동하기";
             
             // 놀이터 가는 시간 기다리기
             // 어린왕자 놀이터로 이동시킴
-            // 10초 후 자동 이동
             // 현재 위치가 놀이터인지 판단하기
             yield return StartCoroutine(CheckNowPlace("playground"));
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 놀이터에서 어린왕자 찾기";
             ChatSelfStart("나레이션", 5);
             
             // 얘가 진짜 어디갔지?
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(5f);
             ChatSelfStart("장미", 6);
             
             Debug.Log("프롤로그 종료");
@@ -88,11 +95,11 @@ public class StoryManager : MonoBehaviour
             Debug.Log("메인퀘스트 #1 획득 완료!!");
             
             // 모래성 차는 동작
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(5f);
             ChatSelfStart("장미", 7);
             
             // 여우 나오고 도망치게 합니다
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(5f);
             ChatSelfStart("장미", 8);
             // 일일 퀘스트 여우에게 밥을 주자 추가 예정
             
@@ -100,14 +107,26 @@ public class StoryManager : MonoBehaviour
             // 집앞으로 이동하게 합니다
             // 집 완성시 캐릭터 좌표 이동하거나 신전환하여 집앞이나 집으로 이동시킵니다
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 장미의 집앞으로 이동하기";
-            yield return new WaitForSeconds(20f);
+            yield return new WaitForSeconds(5f);
             ChatSelfStart("장미", 9);
             
             // #2-7: Day+6, 놀이터
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 다시 놀이터로 가보기";
-            yield return new WaitForSeconds(20f);
-            player.transform.position = new Vector3(80.07f, 0, -26.16f);
+            yield return StartCoroutine(CheckNowPlace("playground"));
             ChatSelfStart("장미",10);
+            
+            
+            // #3-1: secret episode
+            // 다음날 집으로 돌아간다
+            questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 다시 집으로 돌아가자";
+            yield return new WaitForSeconds(3f);
+            ChatSelfStart("아빠", 11);
+
+            questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 병원으로 가보자";
+            yield return StartCoroutine(CheckNowScene("Hospital"));
+            // 신 이동시 필요
+            SetGameObject();
+            yield return StartCoroutine(CheckLastChatNPC("아빠"));
             
             // 이후 로직 작성
             break;
@@ -128,6 +147,14 @@ public class StoryManager : MonoBehaviour
         chatPrint.ChatOpen(npcName);
     }
 
+    private IEnumerator CheckLastChatNPC(string npcName)
+    {
+        while (playerData.lastChatNPC != npcName)
+        {
+            yield return null;
+        }
+    }
+    
     // 대화 횟수 체크해서 퀘스트 완료시킵니다
     private IEnumerator CheckInitialConversations(int i)
     {
@@ -145,6 +172,14 @@ public class StoryManager : MonoBehaviour
         }
     }
 
+    private IEnumerator CheckNowScene(string sceneName)
+    {
+        while (SceneManager.GetActiveScene().name != sceneName)
+        {
+            yield return null;      // 지정 신으로 이동할 때까지 대기 
+        }    
+    }
+    
     private void GetMainQuest(int questNum)
     {
         QuestData questData = dataManager.questDataManager.questDataList[questNum - 1];

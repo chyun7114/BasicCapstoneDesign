@@ -21,6 +21,7 @@ public class PlayerData : MonoBehaviour, IData
     public int currentTalkId = 0;
 
     public string nowPlace = null;
+    public string lastChatNPC = null;
     
     private GameObject player;
     
