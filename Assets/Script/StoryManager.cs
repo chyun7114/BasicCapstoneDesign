@@ -16,6 +16,7 @@ public class StoryManager : MonoBehaviour
     public GameObject littlePrince;
     public GameObject questInfo;
     
+    
     private int mainQuestNum = 0;
     private int subQuestNum = 0;
     public int dialogueGroupId = 0;
@@ -61,7 +62,7 @@ public class StoryManager : MonoBehaviour
             // 초반 대화를 순서대로 끝마치는 경우 메인퀘스트 1번 얻음
             yield return StartCoroutine(CheckLastChatNPC("어린 왕자"));
             playerData.lastChatNPC = null;
-            
+
             // 어린왕자와 대화 이후 5초 대기
             yield return new WaitForSeconds(5f);
             
@@ -102,7 +103,7 @@ public class StoryManager : MonoBehaviour
             yield return new WaitForSeconds(5f);
             ChatSelfStart("장미", 8);
             // 일일 퀘스트 여우에게 밥을 주자 추가 예정
-            
+            yield return new WaitForSeconds(3f);
             // #2-6: Day+5, 집 앞
             // 집앞으로 이동하게 합니다
             // 집 완성시 캐릭터 좌표 이동하거나 신전환하여 집앞이나 집으로 이동시킵니다
@@ -117,7 +118,7 @@ public class StoryManager : MonoBehaviour
             
             
             // #3-1: secret episode
-            // 다음날 집으로 돌아간다
+            // 다음날 집으로 돌아간다 
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 다시 집으로 돌아가자";
             yield return new WaitForSeconds(3f);
             ChatSelfStart("아빠", 11);
@@ -126,6 +127,7 @@ public class StoryManager : MonoBehaviour
             yield return StartCoroutine(CheckNowScene("Hospital"));
             // 신 이동시 필요
             SetGameObject();
+            yield return new WaitForSeconds(3f);
             // 일단 여기 오류나요....
             ChatSelfStart("나레이션", 12);
             
@@ -149,6 +151,7 @@ public class StoryManager : MonoBehaviour
         chatPrint.isFreeChat = true;
         dialogueGroupId = id;
         chatPrint.ChatOpen(npcName);
+
     }
 
     private IEnumerator CheckLastChatNPC(string npcName)

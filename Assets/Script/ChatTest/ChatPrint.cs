@@ -9,7 +9,9 @@ public class ChatPrint : MonoBehaviour
     public GameObject questManager;
     public List<DialogueData> dialogueList;
     public List<NPCData> npcList;
-    
+
+    public GameObject storyImage;
+
     public DataManager dataManager;
     public TMP_Text chatText;
     public TMP_Text speakerName;
@@ -131,10 +133,12 @@ public class ChatPrint : MonoBehaviour
             }
             else if(isChatting)
             {
+
                 strtoType = nextChat();
                 if(strtoType!=null)
                 {
-                    if(strtoType.NpcName == "나레이션")
+                    //storyImage.SetActive(true);
+                    if (strtoType.NpcName == "나레이션")
                         speakerName.text = "";
                     else
                         speakerName.text = strtoType.NpcName;
@@ -143,6 +147,7 @@ public class ChatPrint : MonoBehaviour
                 }
                 else
                 {
+                    //storyImage.SetActive(false);
                     ChatClose();
                 }
             }
