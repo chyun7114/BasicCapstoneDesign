@@ -45,3 +45,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: LoadingPanel
+    uniqueID: 2182725293
+    locked: 0
+  - name: InputCharcter
+    uniqueID: 390739903
+    locked: 0

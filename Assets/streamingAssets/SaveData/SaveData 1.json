@@ -1,6 +1,11 @@
 {
     "playerName": "",
     "saveTime": "2024-05-13 13:42:28",
-    "playerItemIdList": [],
+    "playerItemIdList": [
+        1,
+        2,
+        3,
+        4
+    ],
     "playerQuestIdList": []
 }

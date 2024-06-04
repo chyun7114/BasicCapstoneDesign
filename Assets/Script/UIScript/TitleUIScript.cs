@@ -10,6 +10,7 @@ public class TitleUIScript : MonoBehaviour
 
     private GameObject inputCharacterPanel;
     public GameObject loadingPanel;
+    private GameObject mainPanel;
     
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,8 @@ public class TitleUIScript : MonoBehaviour
         inputCharacterPanel = 
             GameObject.Find("GameStartUI").transform.Find("InputCharacterNamePanel").gameObject;
         dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
+        mainPanel = GameObject.Find("GameStartUI").transform.Find("MainPanel").gameObject;
+        mainPanel.SetActive(true);
     }
     
     // Update is called once per frame

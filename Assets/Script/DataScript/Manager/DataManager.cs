@@ -10,6 +10,7 @@ public class DataManager : MonoBehaviour
     public NPCDataManager npcDataManager;
     public QuestDataManager questDataManager;
 
+    public GameObject mainPanel;
     public LoadingUI loadingUI;
     
     private float totalDataCount = 4f; // 로드해야 할 총 데이터 개수
@@ -30,6 +31,8 @@ public class DataManager : MonoBehaviour
         questDataManager = QuestDataManager.Instance;
         
         // 로딩 패널 활성화
+        mainPanel = GameObject.Find("GameStartUI").transform.Find("MainPanel").gameObject;
+        mainPanel.SetActive(false);
         loadingUI.ShowLoadingScreen();
         
         // 데이터 불러옴
@@ -51,7 +54,7 @@ public class DataManager : MonoBehaviour
             yield return StartCoroutine(LoadDataWithProgress(npcDataManager.ReadNpcSheetData()));
             yield return StartCoroutine(LoadDataWithProgress(questDataManager.ReadQuestSheetData()));
         }
-
+        
         // 모든 데이터 로딩 완료 후 로딩 화면 비활성화
         loadingUI.HideLoadingScreen();
         isLoad = true;

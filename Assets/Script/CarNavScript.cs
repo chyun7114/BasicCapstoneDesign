@@ -1,33 +1,56 @@
-using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class CarNavScript : MonoBehaviour
 {
-    public Transform[] waypoints;  // Waypoints 배열
-    private int currentWaypointIndex = 0;
-    private NavMeshAgent agent;
-    
-    void Start()
+    public GameObject[] carPrefabs;
+    public Transform[] carStartingPoint;
+
+    private float time = 0;
+
+    private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        MoveToNextWaypoint();
+        
     }
 
-    void Update()
+    private void Update()
     {
-        if (agent.remainingDistance < agent.stoppingDistance && !agent.pathPending)
+        time += Time.deltaTime;
+
+        if (time > 2.0f)
         {
-            MoveToNextWaypoint();
+            int starting = Random.Range(0, carStartingPoint.Length);
+            int car = Random.Range(0, carPrefabs.Length);
+
+            Quaternion rotation = Quaternion.identity;
+            Vector3 direction = Vector3.forward;
+            if (starting >= 4)
+            {
+                rotation = Quaternion.Euler(0, 180, 0); 
+                direction = Vector3.back; 
+            }
+
+            GameObject carPrefab = Instantiate(carPrefabs[car], carStartingPoint[starting].position, rotation);
+
+
+            StartCoroutine(MoveAndDestroyCar(carPrefab, direction));
+
+            time = 0;
         }
     }
-    
-    void MoveToNextWaypoint()
-    {
-        if (waypoints.Length == 0)
-            return;
 
-        agent.SetDestination(waypoints[currentWaypointIndex].position);
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+    private IEnumerator MoveAndDestroyCar(GameObject car, Vector3 direction)
+    {
+        float elapsedTime = 0f;
+        Rigidbody rb = car.GetComponent<Rigidbody>();
+
+        while (elapsedTime < 22f)
+        {
+            rb.MovePosition(rb.position + direction * 10.0f * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(car);
     }
 }
