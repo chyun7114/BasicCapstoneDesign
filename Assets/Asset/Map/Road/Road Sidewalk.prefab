@@ -12,14 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road Sidewalk
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 3181f15579d1b0c46872c9980226268b, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 3181f15579d1b0c46872c9980226268b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3181f15579d1b0c46872c9980226268b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -97.4
