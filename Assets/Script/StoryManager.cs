@@ -128,10 +128,10 @@ public class StoryManager : MonoBehaviour
             // 신 이동시 필요
             SetGameObject();
             yield return new WaitForSeconds(3f);
-            // 일단 여기 오류나요....
-            ChatSelfStart("나레이션", 12);
-            
-            // 여기부터 짜주세요....
+            // // 일단 여기 오류나요....
+            // ChatSelfStart("나레이션", 12);
+            //
+            // // 여기부터 짜주세요....
             
             // 이후 로직 작성
             break;

@@ -140,7 +140,10 @@ public class PlayerScript : MonoBehaviour
             {
                 TitleUIScript.LoadScene("Street");
             }
-            
+            else if (warpPointName.Equals("RoomWarppoint"))
+            {
+                TitleUIScript.LoadScene("Room");
+            }
         }
 
         // 아이템 도감 진입 키 => I키 누르면 진입 및, esc키와 x버튼 클릭으로 종료
@@ -218,7 +221,20 @@ public class PlayerScript : MonoBehaviour
         
         if (other.CompareTag("Warppoint"))
         {
-            Debug.Log("워프 가능");
+            string warpName = null;
+            if (other.name.Equals("RoomWarppoint"))
+            {
+                warpName = "장미의 방으로";
+            }
+            else if (other.name.Equals("HospitalWarppoint"))
+            {
+                warpName = "병원으로";
+            }
+            else if (other.name.Equals("StreetWarppoint"))
+            {
+                warpName = "거리로";
+            }
+            PressE.transform.Find("Text").GetComponent<TextMeshPro>().text = $"{warpName}로 가기";
             PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
             isInWarpPoint = true;
             warpPointName = other.name;
@@ -234,8 +250,9 @@ public class PlayerScript : MonoBehaviour
                 {
                     chatEnabled = true;
                     nearNPC = other.name;
+                    GameObject text = PressE.transform.Find("Text").gameObject;
+                    text.GetComponent<TextMeshPro>().text = $"{nearNPC}와 대화하기";
                     PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
-                    Debug.Log($"{element.NpcName}와 대화 진행 가능");
                 }
             }
         }

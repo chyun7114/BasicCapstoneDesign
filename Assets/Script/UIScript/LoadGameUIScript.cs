@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -36,10 +37,8 @@ public class LoadGameUIScript : MonoBehaviour
             {
                 // 세이브 파일이 존재하지 않으면 버튼 선택 불가능
                 GameObject SaveDataName = loadGamePanel.transform.GetChild(0).gameObject;
-                GameObject SaveDataTime = loadGamePanel.transform.GetChild(1).gameObject;
                 
                 SaveDataName.SetActive(false);
-                SaveDataTime.SetActive(false);
 
                 Button button = loadGamePanel.GetComponent<Button>();
 
@@ -48,11 +47,15 @@ public class LoadGameUIScript : MonoBehaviour
             else
             {
                 // 세이브 파일 존재할 시 버튼 선택 가능하게 만듬
-                GameObject NoData = loadGamePanel.transform.GetChild(2).gameObject;
+                GameObject NoData = loadGamePanel.transform.GetChild(1).gameObject;
                 
                 Button button = loadGamePanel.GetComponent<Button>();
                 button.onClick.AddListener(() => OnClickPanel(loadGamePanel));
                 NoData.SetActive(false);
+                
+                GameObject SaveDataName = loadGamePanel.transform.GetChild(0).gameObject;
+
+                SaveDataName.GetComponent<TextMeshProUGUI>().text = $"세이브 파일 #{i}";
             }
         }
     }
