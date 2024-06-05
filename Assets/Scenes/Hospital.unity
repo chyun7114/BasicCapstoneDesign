@@ -3059,6 +3059,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2767303730143485492, guid: 1cf20e50d58b0654f8a9639f1f9e89ed, type: 3}
+      propertyPath: PressE
+      value: 
+      objectReference: {fileID: 349709935}
+    - target: {fileID: 2767303730143485492, guid: 1cf20e50d58b0654f8a9639f1f9e89ed, type: 3}
       propertyPath: chatting
       value: 
       objectReference: {fileID: 921632437}
@@ -3978,6 +3982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questManager: {fileID: 0}
+  storyImage: {fileID: 0}
   dataManager: {fileID: 0}
   chatText: {fileID: 1647012668}
   speakerName: {fileID: 1383365624}

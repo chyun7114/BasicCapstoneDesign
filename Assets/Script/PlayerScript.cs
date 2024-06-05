@@ -27,7 +27,6 @@ public class PlayerScript : MonoBehaviour
     public  GameObject dataManager;
     public GameObject PressE;
     public GameObject chatting;
-    public GameObject chatManager;
     public GameObject menuPanel;
     public GameObject charInfoPanel;
     
@@ -234,10 +233,10 @@ public class PlayerScript : MonoBehaviour
             {
                 warpName = "거리로";
             }
-            PressE.transform.Find("Text").GetComponent<TextMeshPro>().text = $"{warpName}로 가기";
-            PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
             isInWarpPoint = true;
             warpPointName = other.name;
+            PressE.transform.Find("Text").GetComponent<TextMeshPro>().text = $"{warpName}로 가기";
+            PressE.GetComponent<PressE>().Pop(other.gameObject.transform.position);
         }
 
         if (other.CompareTag("NPC"))
@@ -302,6 +301,10 @@ public class PlayerScript : MonoBehaviour
             case "PlaygroundEnter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "playground";
                 Debug.Log("놀이터 도착!");
+                break;
+            case "RoomEnter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "room";
+                Debug.Log("집 앞 도착");
                 break;
             default:
                 dataManager.GetComponent<PlayerData>().nowPlace = null;

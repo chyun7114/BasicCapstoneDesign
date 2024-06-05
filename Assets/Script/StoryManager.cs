@@ -108,7 +108,7 @@ public class StoryManager : MonoBehaviour
             // 집앞으로 이동하게 합니다
             // 집 완성시 캐릭터 좌표 이동하거나 신전환하여 집앞이나 집으로 이동시킵니다
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 장미의 집앞으로 이동하기";
-            yield return new WaitForSeconds(5f);
+            yield return StartCoroutine(CheckNowPlace("room"));
             ChatSelfStart("장미", 9);
             
             // #2-7: Day+6, 놀이터
@@ -127,7 +127,7 @@ public class StoryManager : MonoBehaviour
             yield return StartCoroutine(CheckNowScene("Hospital"));
             // 신 이동시 필요
             SetGameObject();
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1000f);
             // // 일단 여기 오류나요....
             // ChatSelfStart("나레이션", 12);
             //
