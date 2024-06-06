@@ -322,6 +322,12 @@ public class PlayerScript : MonoBehaviour
             case "Street#33Enter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "#33";
                 break;
+            case "Street#38Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "#38";
+                break;
+            case "Street#41Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "#41";
+                break;
             case "미끄럼틀Enter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "미끄럼틀";
                 break;
@@ -333,6 +339,9 @@ public class PlayerScript : MonoBehaviour
                 break;
             case "BigGroundEnter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "큰 놀이터";
+                break;
+            case "DadBedEnter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "아빠 옆";
                 break;
             default:
                 dataManager.GetComponent<PlayerData>().nowPlace = null;
