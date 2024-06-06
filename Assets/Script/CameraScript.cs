@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraScript : MonoBehaviour
 {
@@ -29,7 +30,12 @@ public class CameraScript : MonoBehaviour
         target = player.transform;
         targetRotation = new Vector3(0, 180, 0); // 약간 아래를 바라보도록 설정 (원하는 각도로 조정 가능)
         transform.eulerAngles = targetRotation;
-
+        
+        if(SceneManager.GetActiveScene().name.Equals("Room"))
+        {
+            dis = 3.5f;
+            targetRotation = Vector3.zero;
+        }
         // 타겟의 뒤쪽으로 카메라 위치 설정
         Vector3 setTargetPosition = target.position + new Vector3(0, 2, 0);
         transform.position = setTargetPosition - transform.forward * dis;

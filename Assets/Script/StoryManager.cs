@@ -120,16 +120,17 @@ public class StoryManager : MonoBehaviour
             // #3-1: secret episode
             // 다음날 집으로 돌아간다 
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 다시 집으로 돌아가자";
-            yield return new WaitForSeconds(3f);
+            yield return StartCoroutine(CheckNowScene("Room"));
+            SetGameObject();
             ChatSelfStart("아빠", 11);
 
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 병원으로 가보자";
             yield return StartCoroutine(CheckNowScene("Hospital"));
             // 신 이동시 필요
             SetGameObject();
-            yield return new WaitForSeconds(1000f);
+            // yield return new WaitForSeconds(1000f);
             // // 일단 여기 오류나요....
-            // ChatSelfStart("나레이션", 12);
+            ChatSelfStart("나레이션", 12);
             //
             // // 여기부터 짜주세요....
             
