@@ -30,7 +30,7 @@ public class PlayerData : MonoBehaviour, IData
         playerItemList = new List<ItemData>();
         playerQuestList = new List<QuestData>();
         // 나중에 게임 시작시 위치 설정
-        playerPositionInStreet = new Vector3(140f,0f,57.5f);
+        playerPositionInStreet = new Vector3(140f,0f,-57.5f);
         // 병원신 입장 위치 설정
         playerPositionInHospital = new Vector3(2.57f,0,-3.03f);
         DontDestroyOnLoad(gameObject);

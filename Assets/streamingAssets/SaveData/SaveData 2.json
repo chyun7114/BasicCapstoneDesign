@@ -1,6 +1,24 @@
 {
     "playerName": "",
-    "saveTime": "2024-05-11 20:18:58",
-    "playerItemIdList": [],
+    "saveTime": "2024-06-06 14:04:03",
+    "playerTalkCount": 0,
+    "playerPositionInStreet": {
+        "x": 129.46075439453126,
+        "y": -0.0000027418136596679689,
+        "z": 48.62620544433594
+    },
+    "playerPositionInHospital": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerItemIdList": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
     "playerQuestIdList": []
 }

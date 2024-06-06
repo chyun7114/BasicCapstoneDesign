@@ -63,8 +63,8 @@ public class ItemUIScript : MonoBehaviour
         for (int i = 0; i < itemDataList.Count; i++)
         {
             // 각 아이템의 위치 계산
-            float dirX = firstDirX + (i % 2) * 420; // 120은 아이템 간 간격
-            float dirY = firstDirY - (i / 2) * 420;
+            float dirX = firstDirX + (i % 2) * 320; // 120은 아이템 간 간격
+            float dirY = firstDirY - (i / 2) * 320;
             Vector3 itemDir = new Vector3(dirX, dirY, 0);
 
             // 프리팹 인스턴스화 및 위치 지정

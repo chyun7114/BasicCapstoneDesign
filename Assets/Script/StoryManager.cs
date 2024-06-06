@@ -239,6 +239,7 @@ public class StoryManager : MonoBehaviour
 
             
             // 다시 거리로
+            SetQuestInfo("거리로 나가보자");
             yield return StartCoroutine(CheckNowScene("Street"));
             SetGameObject();
             jiyeon = GameObject.Find("황지영");
@@ -247,6 +248,7 @@ public class StoryManager : MonoBehaviour
             fox.transform.position = new Vector3(999f, 999f, 999f);
             littlePrince.transform.position = new Vector3(999f, 0, -999f);
             
+            SetQuestInfo("저기 사람들이 많다...?");
             yield return StartCoroutine(CheckNowPlace("#33"));
             ChatSelfStart("나레이션", 33);
             
