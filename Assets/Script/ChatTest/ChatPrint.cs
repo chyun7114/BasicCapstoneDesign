@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -247,7 +248,16 @@ public class ChatPrint : MonoBehaviour
     void ChatClose()
     {
         playerData.lastChatNPC = chattingNPC;
-        Camera.main.GetComponent<CameraScript>().EndChat();
+        try
+        {
+            Camera.main.GetComponent<CameraScript>().EndChat();
+        }
+        catch(Exception e)
+        {
+            GameObject cameraObject = GameObject.Find("Main Camera");
+            cameraObject.GetComponent<CameraScript>().EndChat();
+        }
+
         player.GetComponent<PlayerScript>().EndChat();
         isChatting = false;
         chatpanel.SetActive(false);

@@ -107,6 +107,7 @@ public class PlayerScript : MonoBehaviour
         {
             animator.SetBool("IsWalk", false);
             animator.SetBool("IsRun", false);
+            rb.freezeRotation = true;
         }
         
         if (Input.GetMouseButtonDown(1))
@@ -259,16 +260,19 @@ public class PlayerScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        // 대화가 끝나고 npc와 멀어지면 npc와의 상호작용 불가능
-        foreach (var element in npcList)
+        if (other.CompareTag("NPC"))
         {
-            if (other.name.Equals(element.NpcName))
+            // 대화가 끝나고 npc와 멀어지면 npc와의 상호작용 불가능
+            foreach (var element in npcList)
             {
-                chatEnabled=false;
-                PressE.GetComponent<PressE>().Hide();
+                if (other.name.Equals(element.NpcName))
+                {
+                    chatEnabled = false;
+                    PressE.GetComponent<PressE>().Hide();
+                }
             }
         }
-        
+
         if (other.CompareTag("Warppoint"))
         {
             PressE.GetComponent<PressE>().Hide();
@@ -305,6 +309,30 @@ public class PlayerScript : MonoBehaviour
             case "RoomEnter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "room";
                 Debug.Log("집 앞 도착");
+                break;
+            case "FoxEnter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "fox";
+                break;
+            case "Street#14Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "#14";
+                break;
+            case "Street#24Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "#24";
+                break;
+            case "Street#33Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "#33";
+                break;
+            case "미끄럼틀Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "미끄럼틀";
+                break;
+            case "놀이터벤치Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "놀이터벤치";
+                break;
+            case "SandPlayGroundEnter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "모래놀이터";
+                break;
+            case "BigGroundEnter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "큰 놀이터";
                 break;
             default:
                 dataManager.GetComponent<PlayerData>().nowPlace = null;

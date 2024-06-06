@@ -15,7 +15,7 @@ public class StoryManager : MonoBehaviour
     public GameObject player;
     public GameObject littlePrince;
     public GameObject questInfo;
-    
+    public GameObject fox;
     
     private int mainQuestNum = 0;
     private int subQuestNum = 0;
@@ -62,10 +62,6 @@ public class StoryManager : MonoBehaviour
             // 초반 대화를 순서대로 끝마치는 경우 메인퀘스트 1번 얻음
             yield return StartCoroutine(CheckLastChatNPC("어린 왕자"));
             playerData.lastChatNPC = null;
-
-            // 어린왕자와 대화 이후 5초 대기
-            yield return new WaitForSeconds(5f);
-            
             // 나레이션 나온다
             ChatSelfStart("나레이션", 2);
             
@@ -87,7 +83,7 @@ public class StoryManager : MonoBehaviour
             ChatSelfStart("나레이션", 5);
             
             // 얘가 진짜 어디갔지?
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
             ChatSelfStart("장미", 6);
             
             Debug.Log("프롤로그 종료");
@@ -96,14 +92,17 @@ public class StoryManager : MonoBehaviour
             Debug.Log("메인퀘스트 #1 획득 완료!!");
             
             // 모래성 차는 동작
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
             ChatSelfStart("장미", 7);
             
             // 여우 나오고 도망치게 합니다
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
             ChatSelfStart("장미", 8);
+            fox = GameObject.Find("Fox");
+            fox.transform.position = GameObject.Find("FoxEnter").transform.position;
             // 일일 퀘스트 여우에게 밥을 주자 추가 예정
-            yield return new WaitForSeconds(3f);
+
+            
             // #2-6: Day+5, 집 앞
             // 집앞으로 이동하게 합니다
             // 집 완성시 캐릭터 좌표 이동하거나 신전환하여 집앞이나 집으로 이동시킵니다
@@ -124,19 +123,142 @@ public class StoryManager : MonoBehaviour
             SetGameObject();
             ChatSelfStart("아빠", 11);
 
-            questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 병원으로 가보자";
-            yield return StartCoroutine(CheckNowScene("Hospital"));
-            // 신 이동시 필요
+            yield return StartCoroutine(CheckNowScene("Street"));
             SetGameObject();
-            // yield return new WaitForSeconds(1000f);
-            // // 일단 여기 오류나요....
+            questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 병원으로 가보자";
+            
+            yield return StartCoroutine(CheckNowScene("Hospital"));
+            SetGameObject();
             ChatSelfStart("나레이션", 12);
-            //
-            // // 여기부터 짜주세요....
+            
+            
+            // 여우가 뱀한테 물려갑니다
+            yield return StartCoroutine(CheckNowScene("Street"));
+            SetGameObject();
+            SetQuestInfo("골목에서 여우를 찾아보자");
+            fox = GameObject.Find("Fox");
+            fox.transform.position = GameObject.Find("FoxEnter").transform.position;
+            yield return StartCoroutine(CheckNowPlace("fox"));
+            fox.transform.position = GameObject.Find("FoxEnter").transform.position;
+            ChatSelfStart("나레이션", 13);
+            fox.transform.position = new Vector3(999f, 0, 999f);
+            
+            SetQuestInfo("여우를 찾아서 거리로 나가보자");
+            yield return StartCoroutine(CheckNowPlace("#14"));
+            ChatSelfStart("나레이션", 14);
+            
+            SetQuestInfo("거리의 이준호에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("이준호"));
+            
+            SetQuestInfo("거리의 김지연에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("김지연"));
+            
+            SetQuestInfo("거리의 임태우에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("임태우"));
+            
+            SetQuestInfo("거리의 박성우에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("박성우"));
+            
+            SetQuestInfo("거리의 황지연에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("황지연"));
+            GameObject jiyeon = GameObject.Find("황지연");
+            jiyeon.transform.position = new Vector3(900, 0, 900);
+            ChatSelfStart("나레이션", 20);
+            
+            SetQuestInfo("슬프지만 아빠에게 되돌아간다");
+            yield return StartCoroutine(CheckNowScene("Hospital"));
+            SetGameObject();
+            SetQuestInfo("슬프지만 아빠에게 되돌아간다");
+            ChatSelfStart("나레이션", 21);
+            
+            // 아빠 옆에 가면 이야기 시작
+            // 지금은 일단 시간 기다리기
+            SetQuestInfo("아빠 옆으로 가기");
+            yield return new WaitForSeconds(3f);
+            ChatSelfStart("나레이션", 22);
+            
+            // 일단 밤낮 바궈야함
+            yield return new WaitForSeconds(3f);
+            ChatSelfStart("나레이션", 23);
+            
+            // 저녁임
+            yield return StartCoroutine(CheckNowScene("Street"));
+            // 거리로 돌아왔으니 info 정보 갱신
+            SetGameObject();
+            jiyeon = GameObject.Find("황지연");
+            jiyeon.transform.position = new Vector3(900, 0, 900);
+            fox = GameObject.Find("Fox");
+            fox.transform.position = new Vector3(999f, 999f, 999f);
+
+            yield return StartCoroutine(CheckNowPlace("#24"));
+            ChatSelfStart("나레이션", 24);
+            
+            SetQuestInfo("놀이터로 가보자");
+            yield return StartCoroutine(CheckNowPlace("모래놀이터"));
+            ChatSelfStart("나레이션", 25);
+            
+            // 벤치로 이동
+            SetQuestInfo("슬픈 마음과 함께 벤치로 간다...");
+            yield return StartCoroutine(CheckNowPlace("놀이터벤치"));
+            ChatSelfStart("나레이션", 26);
+            
+            GameObject unknown = GameObject.Find("???");
+            unknown.SetActive(true);
+            SetQuestInfo("???가 옆으로 왔다?");
+            ChatSelfStart("???", 27);
+            
+            SetQuestInfo("???와 대화하기");
+            yield return StartCoroutine(CheckLastChatNPC("???"));
+            
+            SetQuestInfo("???에게 비행기를 받자");
+            yield return StartCoroutine(CheckLastChatNPC("???"));
+            unknown.SetActive(false);
+            
+            // 아침이 밝아서 장미 손에 계속 비행기 들려있음
+            yield return new WaitForSeconds(3f);
+            ChatSelfStart("나레이션", 30);
+            
+            SetQuestInfo("다시 아빠의 병실로 돌아가자");
+            yield return StartCoroutine(CheckNowScene("Hospital"));
+            SetGameObject();
+            
+            // 아빠 옆으로가면 대화 시작
+            yield return new WaitForSeconds(3f);
+            ChatSelfStart("나레이션", 31);
+            
+            // 어린왕자 사진이 보여지면서
+            yield return new WaitForSeconds(1f);
+            ChatSelfStart("장미", 32);
+
+            yield return StartCoroutine(CheckNowScene("Street"));
+            SetGameObject();
+            jiyeon = GameObject.Find("황지연");
+            jiyeon.transform.position = new Vector3(900, 0, 900);
+            fox = GameObject.Find("Fox");
+            fox.transform.position = new Vector3(999f, 999f, 999f);
+
+            yield return StartCoroutine(CheckNowPlace("#33"));
+            ChatSelfStart("나레이션", 33);
+            
+            
+            SetQuestInfo("거리의 최유진에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("이준호"));
+            
+            SetQuestInfo("거리의 강민호에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("김지연"));
+            
+            SetQuestInfo("거리의 송지우에게 여우를 물어보자");
+            yield return StartCoroutine(CheckLastChatNPC("임태우"));
+
             
             // 이후 로직 작성
             break;
         }
+    }
+
+    private void SetQuestInfo(string questDetail)
+    {
+        questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- " + questDetail;
     }
 
     private IEnumerator SubQuestRoutine()

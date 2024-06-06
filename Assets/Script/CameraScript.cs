@@ -18,7 +18,7 @@ public class CameraScript : MonoBehaviour
     
     private Vector3 targetRotation;
     private Vector3 currentVel;
-    private bool whileChatting = false;
+    public bool whileChatting = false;
     private bool isDragging = false;
 
     
