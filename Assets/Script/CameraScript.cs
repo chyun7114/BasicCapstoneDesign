@@ -36,6 +36,13 @@ public class CameraScript : MonoBehaviour
             dis = 3.5f;
             targetRotation = Vector3.zero;
         }
+
+        if (SceneManager.GetActiveScene().name == "Hospital")
+        {
+            dis = 2.0f;
+            targetRotation = Vector3.zero;
+            transform.eulerAngles = Vector3.zero;
+        }
         // 타겟의 뒤쪽으로 카메라 위치 설정
         Vector3 setTargetPosition = target.position + new Vector3(0, 2, 0);
         transform.position = setTargetPosition - transform.forward * dis;

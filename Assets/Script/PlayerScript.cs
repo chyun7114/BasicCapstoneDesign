@@ -313,6 +313,10 @@ public class PlayerScript : MonoBehaviour
             case "FoxEnter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "fox";
                 break;
+            case "Hospital#12Enter":
+                dataManager.GetComponent<PlayerData>().nowPlace = "#12";
+                Debug.Log("#12");
+                break;
             case "Street#14Enter":
                 dataManager.GetComponent<PlayerData>().nowPlace = "#14";
                 break;

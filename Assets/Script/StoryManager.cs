@@ -130,7 +130,7 @@ public class StoryManager : MonoBehaviour
             fox.transform.position = GameObject.Find("FoxEnter").transform.position;
             questInfo.GetComponent<TextMeshProUGUI>().text = "퀘스트 정보\n- 병원으로 가보자";
             
-            yield return StartCoroutine(CheckNowScene("Hospital"));
+            yield return StartCoroutine(CheckNowPlace("#12"));
             SetGameObject();
             ChatSelfStart("나레이션", 12);
             
